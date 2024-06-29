@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -72,18 +73,45 @@ public class LoadingManager : MonoBehaviour
         InputManager.Instance.ReadInput = false;
 
         EventManager.EventFired onLoadingScreenShowListener = null;
-            onLoadingScreenShowListener = () =>
-            {
-                EventManager.LoadingScreenShow -= onLoadingScreenShowListener;
-                
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene(_scene);
-            };
+        onLoadingScreenShowListener = () =>
+        {
+            EventManager.LoadingScreenShow -= onLoadingScreenShowListener;
+            StartCoroutine(LoadSceneAsync(_scene));
+        };
 
         EventManager.LoadingScreenShow += onLoadingScreenShowListener;
 
         // Show loading screen
         LoadingScreen.Instance.Show(_loadingParameters);
+    }
+
+    private IEnumerator LoadSceneAsync(string _scene)
+    {
+        // Start loading the scene asynchronously
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_scene);
+        asyncOperation.allowSceneActivation = false;
+
+        // While the scene is loading, update the loading bar
+        while (!asyncOperation.isDone)
+        {
+            // Update the loading bar (progress is between 0 and 0.9 while loading, and 0.9 to 1 when done)
+            float progress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
+            LoadingBarManager.Instance.UpdateBarSize(progress);
+
+            // Check if the load has finished
+            if (asyncOperation.progress >= 0.9f)
+            {
+                // Optionally wait a few frames to ensure loading screen is fully visible
+                yield return new WaitForSeconds(0.5f);
+
+                // Activate the scene
+                asyncOperation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

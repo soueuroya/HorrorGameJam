@@ -78,6 +78,7 @@ public class TutorialManager : BaseMenu
 
     public void OnMainMenuSelected()
     {
+        AudioManager.Instance.PlayCancel();
         LoadingManager.Instance.LoadScene("MainMenu", new LoadingParameters() { });
     }
 }

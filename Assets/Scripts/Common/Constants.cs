@@ -8,6 +8,7 @@ public sealed class Constants
         public static string proofExpireDate = "proofExpireDate";
         public static string masterVolume = "masterVolume";
         public static string musicCapVolume = "musicCapVolume";
+        public static string musicFade = "musicFadeVolume";
         public static string sfxCapVolume = "sfxCapVolume";
         public static string screenModeKey = "screenModeKey";
         public static string selectedTheme = "selectedTheme";

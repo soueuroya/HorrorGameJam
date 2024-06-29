@@ -142,10 +142,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8681864624972070026}
-  uiAccept: {fileID: 0}
-  uiFail: {fileID: 0}
-  uiClick: {fileID: 0}
-  uiType: {fileID: 0}
-  uiPopup: {fileID: 0}
-  uiToken: {fileID: 0}
-  uiBigAccept: {fileID: 0}
+  uiBigAccept: {fileID: 8300000, guid: 79c02e9d1a68a21458957e41023f3330, type: 3}
+  uiAccept: {fileID: 8300000, guid: 5cc7970a1585ed94a9a1e7abb279ac63, type: 3}
+  uiCancel: {fileID: 8300000, guid: 0795affe0175a714a82ab50039366a0e, type: 3}
+  uiSelect: {fileID: 8300000, guid: a5aa81138849faa419cf02e7f8e46d0f, type: 3}
+  uiBack: {fileID: 0}
+  uiTyping: {fileID: 8300000, guid: 66b9494e37aea7e4598a00fb2d5be36a, type: 3}
+  uiPopup: {fileID: 8300000, guid: dfccb2bb08b02bd48b69fd3e912fdea0, type: 3}

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LoadingBarManager : MonoBehaviour
 {
     [SerializeField] LoadingBar bar;
-    [SerializeField] LoadingBar bar2;
+    //[SerializeField] LoadingBar bar2;
     private float rotationSpeed = -250.0f;
     public static LoadingBarManager Instance;
     public float debugProgress;
@@ -40,7 +40,7 @@ public class LoadingBarManager : MonoBehaviour
         //bar2.UpdateSegments(_size);
 
         bar.UpdateBar(_size);
-        bar2.UpdateBar(_size);
+        //bar2.UpdateBar(_size);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class LoadingBarManager : MonoBehaviour
     public void LoadIndefinitely()
     {
         bar.CycleSegments();
-        bar2.CycleSegments();
+        //bar2.CycleSegments();
     }
 
     public void Stop()
@@ -57,7 +57,7 @@ public class LoadingBarManager : MonoBehaviour
         bar.ResetLoadingBar();
         bar.ResetAllTweens();
 
-        bar2.ResetLoadingBar();
-        bar2.ResetAllTweens();
+        //bar2.ResetLoadingBar();
+        //bar2.ResetAllTweens();
     }
 }

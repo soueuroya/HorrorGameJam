@@ -123,7 +123,7 @@ public class MusicManager : MonoBehaviour
         {
             audioSource.clip = _nextClip; // update with new song
             audioSource.Play(); // start playing new song
-            AudioManager.Instance.SetVolume("musicFadeVolume", 1);
+            AudioManager.Instance.SetVolume(Constants.Prefs.musicFade, 1);
             //FadeMusicTo(AnimationTimers.MUSIC_FADEIN, maxVolume); // fade IN new song
             //if (!audioSource.loop)
             //{
@@ -139,7 +139,7 @@ public class MusicManager : MonoBehaviour
 
     public void FadeMusicTo(float _fadeLenght, float _fadeToValue, Action _callback = null)
     {
-        AudioManager.Instance?.FadeTo("musicFadeVolume", _fadeLenght, _fadeToValue, () => {
+        AudioManager.Instance?.FadeTo(Constants.Prefs.musicFade, _fadeLenght, _fadeToValue, () => {
             if (_fadeToValue > 0)
             {
 
@@ -168,7 +168,7 @@ public class MusicManager : MonoBehaviour
 
     private void FadeMusicAtEnd()
     {
-        AudioManager.Instance.FadeTo("musicFadeVolume", AnimationTimers.MUSIC_FADEOUT, 0, () => {
+        AudioManager.Instance.FadeTo(Constants.Prefs.musicFade, AnimationTimers.MUSIC_FADEOUT, 0, () => {
             audioSource.Stop();
 
             // Invoke everything again from the start once fade OUT ends. Also, waiting for delayUntilNextSong

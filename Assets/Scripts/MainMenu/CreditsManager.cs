@@ -78,6 +78,7 @@ public class CreditsManager : BaseMenu
 
     public void OnMainMenuSelected()
     {
+        AudioManager.Instance.PlayCancel();
         LoadingManager.Instance.LoadScene("MainMenu", new LoadingParameters() { });
     }
 }
