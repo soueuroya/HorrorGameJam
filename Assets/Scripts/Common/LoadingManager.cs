@@ -27,8 +27,6 @@ public class LoadingManager : MonoBehaviour
         }
 
         EventManager.ContentLoaded += OnContentLoaded;
-        EventManager.SceneLoad += OnSceneLoaded;
-        EventManager.SceneUnload += OnSceneUnloaded;
         EventManager.MainMenuSceneLoad += OnMainMenuSceneLoad;
         EventManager.EventManagerLoaded += InitializeLoading;
     }
@@ -54,8 +52,6 @@ public class LoadingManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.ContentLoaded -= OnContentLoaded;
-        EventManager.SceneLoad -= OnSceneLoaded;
-        EventManager.SceneUnload -= OnSceneUnloaded;
         EventManager.MainMenuSceneLoad -= OnMainMenuSceneLoad;
         EventManager.EventManagerLoaded -= InitializeLoading;
     }
@@ -66,11 +62,12 @@ public class LoadingManager : MonoBehaviour
     /// Loads scene content as Addressables
     /// </summary>
     /// <param name="_scene"></param>
-    /// <param name="resourceKey"></param>
     /// <param name="_loadingParameters"></param>
     public void LoadScene(string _scene, LoadingParameters _loadingParameters = null)
     {
         InputManager.Instance.ReadInput = false;
+        // Show loading screen
+        LoadingScreen.Instance.Show(_loadingParameters);
 
         EventManager.EventFired onLoadingScreenShowListener = null;
         onLoadingScreenShowListener = () =>
@@ -80,9 +77,6 @@ public class LoadingManager : MonoBehaviour
         };
 
         EventManager.LoadingScreenShow += onLoadingScreenShowListener;
-
-        // Show loading screen
-        LoadingScreen.Instance.Show(_loadingParameters);
     }
 
     private IEnumerator LoadSceneAsync(string _scene)
@@ -90,73 +84,30 @@ public class LoadingManager : MonoBehaviour
         // Start loading the scene asynchronously
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_scene);
         asyncOperation.allowSceneActivation = false;
-
+        
         // While the scene is loading, update the loading bar
         while (!asyncOperation.isDone)
         {
             // Update the loading bar (progress is between 0 and 0.9 while loading, and 0.9 to 1 when done)
             float progress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
+
             LoadingBarManager.Instance.UpdateBarSize(progress);
 
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f)
             {
-                // Optionally wait a few frames to ensure loading screen is fully visible
-                yield return new WaitForSeconds(0.5f);
-
                 // Activate the scene
                 asyncOperation.allowSceneActivation = true;
             }
 
             yield return null;
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        LoadingBarManager.Instance.UpdateBarSize(1);
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded; // Remove the event handler to prevent it from being called multiple times
-        EventManager.OnSceneLoad();
-    }
     #endregion Public Methods
 
     #region Private Helpers
-    /*
-    public void UnloadScene(ResourceManager.ResourceKeys resourceKey)
-    {
-        // TODO: Not working on MAC / OSX?
-        //if (sceneInstancePreviouslySet)
-        //{
-        //    ResourceManager.UnloadScene(oldSceneInstance, resourceKey, (e) =>
-        //    {
-        //        EventManager.OnSceneUnload();
-        //    });
-        //}
-        //else
-        //{
-        //    StartCoroutine(UnloadPreviousInstantiatedScene());
-        //}
-        //EventManager.OnSceneUnload();
-        ResourceManager.UnloadSceneWithManager();
-    }
-    */
-
-    private void OnSceneLoaded()
-    {
-        // Wait for scene to unload
-
-        //EventManager.OnSceneUnload();
-
-        //if (previousSceneKey != ResourceManager.ResourceKeys.ManagersScene)
-        //{
-            //UnloadScene(previousSceneKey);
-        //}
-        //else
-        //{
-        //    EventManager.OnSceneUnload();
-        //}
-    }
 
     private void OnSceneUnloaded()
     {

@@ -10,7 +10,7 @@ public class LoadingBar : MonoBehaviour
 
     public void UpdateBar(float progress)
     {
-        bar.localScale = Vector2.right * progress;
+        bar.localScale = Vector2.right * progress + Vector2.up;
     }
 
     public void UpdateSegments(float progress)
