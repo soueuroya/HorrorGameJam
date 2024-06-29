@@ -13,13 +13,13 @@ public class AudioManager : MonoBehaviour
     // Component references
     public AudioMixer masterMixer { get; private set; }
     [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip uiAccept;
-    [SerializeField] AudioClip uiFail;
-    [SerializeField] AudioClip uiClick;
-    [SerializeField] AudioClip uiType;
-    [SerializeField] AudioClip uiPopup;
-    [SerializeField] AudioClip uiToken;
     [SerializeField] AudioClip uiBigAccept;
+    [SerializeField] AudioClip uiAccept;
+    [SerializeField] AudioClip uiCancel;
+    [SerializeField] AudioClip uiSelect;
+    [SerializeField] AudioClip uiBack;
+    [SerializeField] AudioClip uiTyping;
+    [SerializeField] AudioClip uiPopup;
 
     private float delay = 0;
 
@@ -118,14 +118,14 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(uiBigAccept);
     }
 
-    public void PlayFail()
+    public void PlayCancel()
     {
-        audioSource.PlayOneShot(uiFail);
+        audioSource.PlayOneShot(uiCancel);
     }
 
     public void PlayClick()
     {
-        audioSource.PlayOneShot(uiClick);
+        audioSource.PlayOneShot(uiSelect);
     }
 
     public void PlayType()
@@ -135,17 +135,12 @@ public class AudioManager : MonoBehaviour
             return;
         }
         delay = 0.05f;
-        audioSource.PlayOneShot(uiType);
+        audioSource.PlayOneShot(uiTyping);
     }
 
     public void PlayPopup()
     {
         audioSource.PlayOneShot(uiPopup);
-    }
-
-    public void PlayToken()
-    {
-        audioSource.PlayOneShot(uiToken);
     }
 
     #endregion Public Methods
