@@ -22,12 +22,7 @@ public class VolumeSlider : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        slider.onValueChanged.AddListener(OnVolumeChange);
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         slider.onValueChanged.RemoveListener(OnVolumeChange);
     }
@@ -60,6 +55,8 @@ public class VolumeSlider : MonoBehaviour
             label.text = String.Format("{0}%", (int)(volume * 100));
             AudioManager.Instance.masterMixer.SetFloat(volumePrefString, Mathf.Log10(volume) * 20);
         }
+
+        slider.onValueChanged.AddListener(OnVolumeChange);
     }
 
     public void OnVolumeChange(float value)

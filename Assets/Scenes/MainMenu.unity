@@ -399,6 +399,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2273719624079806262, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833938093087125816, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376517559751349752, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799273488899642495, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4706656968134875002, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -482,6 +498,10 @@ PrefabInstance:
     - target: {fileID: 5831015223040366246, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
       propertyPath: m_Name
       value: MainMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8503842256569270764, guid: 7a0f38a5e3e15c4459f0ac76cbc4ffbe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

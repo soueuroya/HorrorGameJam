@@ -94,6 +94,12 @@ public class MainMenuManager : BaseMenu
         LoadingManager.Instance.LoadScene("Credits", new LoadingParameters() { });
     }
 
+    public void OnSettingsSelected()
+    {
+        AudioManager.Instance.PlayAccept();
+        LoadingManager.Instance.LoadScene("Settings", new LoadingParameters() { });
+    }
+
     public void OnExistGameSelected()
     {
         AudioManager.Instance.PlayCancel();
