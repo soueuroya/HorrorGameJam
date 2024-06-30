@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class GameManager : BaseMenu
 {
@@ -53,7 +54,6 @@ public class GameManager : BaseMenu
         {
             base.Show(() =>
             {
-                
                 EventManager.OnContentLoaded();
             });
         });

@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 3627956974506427446}
   isVisible: 0
+  pauseScreen: {fileID: 0}
 --- !u!1 &8721926445257949191
 GameObject:
   m_ObjectHideFlags: 0

@@ -68,12 +68,10 @@ namespace TarodevController
 
         private void FixedUpdate()
         {
-            HandleJump();
-
-            CheckCollisions();
+            HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
+            CheckCollisions(); // Update collisions and flags
             HandleDirection();
             HandleGravity();
-            
             ApplyMovement();
         }
 
