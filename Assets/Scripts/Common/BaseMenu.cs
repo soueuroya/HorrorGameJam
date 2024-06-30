@@ -17,6 +17,18 @@ public class BaseMenu : MonoBehaviour
         }
     }
 
+    public void Toggle(Action _callback)
+    {
+        if (isVisible)
+        {
+            Hide(_callback);
+        }
+        else
+        {
+            Show(_callback);
+        }
+    }
+
     public virtual void Show(Action _callback)
     {
         gameObject.SetActive(true);
