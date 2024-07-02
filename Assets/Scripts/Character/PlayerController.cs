@@ -18,7 +18,9 @@ namespace TarodevController
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;
         private Vector2 _frameVelocity;
+        private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
+        private RigidbodyConstraints2D constraints; 
 
         #region Interface
 
@@ -38,11 +40,47 @@ namespace TarodevController
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
+        private void OnEnable()
+        {
+            GameEventManager.PauseGame += OnGamePaused;
+            GameEventManager.ResumeGame += OnGameResumed;
+        }
+
+        private void OnDisable()
+        {
+            GameEventManager.PauseGame -= OnGamePaused;
+            GameEventManager.ResumeGame -= OnGameResumed;
+        }
+
         private void Update()
         {
             _time += Time.deltaTime;
             GatherInput();
         }
+
+        private void OnGamePaused()
+        {
+            Invoke("PausePlayer", 0.0f);
+        }
+        private void OnGameResumed()
+        {
+            Invoke("ResumePlayer", 0.2f);
+        }
+
+        private void PausePlayer()
+        {
+            constraints = _rb.constraints;
+            _savedframeVelocity = _rb.velocity;
+            _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        private void ResumePlayer()
+        {
+            _rb.constraints = constraints;
+            _rb.velocity = _savedframeVelocity;
+        }
+
+
 
         private void GatherInput()
         {

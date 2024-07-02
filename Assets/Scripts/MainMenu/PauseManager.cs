@@ -4,6 +4,9 @@ using UnityEngine;
 public class PauseManager : BaseMenu
 {
     private bool sceneLoadListenerAdded = false;
+    private bool readInput = true;
+    private Action delayedCallback;
+
 
     private void OnEnable()
     {
@@ -12,9 +15,16 @@ public class PauseManager : BaseMenu
 
     public override void Show(Action _callback)
     {
+        GameEventManager.OnGamePause();
+        delayedCallback = _callback;
+        Invoke("DelayedShow", 0.2f);
+    }
+
+    private void DelayedShow()
+    {
         UpdateContent(() =>
         {
-            base.Show(_callback);
+            base.Show(delayedCallback);
         });
     }
 
@@ -39,6 +49,7 @@ public class PauseManager : BaseMenu
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
             _callback?.Invoke();
+            GameEventManager.OnGameResume();
             //gameObject.SetActive(false); // Don't desactivate pause screen
         });
     }
