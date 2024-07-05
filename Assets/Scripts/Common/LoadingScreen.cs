@@ -5,7 +5,7 @@ public class LoadingParameters {
     public string title = "";
     public string description = "";
     public bool showTips = false;
-    public bool isIndefinite;
+    //public bool isIndefinite;
 }
 
 [RequireComponent(typeof(CanvasGroup))]
@@ -130,10 +130,10 @@ public class LoadingScreen : MonoBehaviour
             return;
         }
         
-        if (_loadingParameters.isIndefinite)
-        {
-            LoadingBarManager.Instance.LoadIndefinitely();
-        }
+        //if (_loadingParameters.isIndefinite)
+        //{
+        //    LoadingBarManager.Instance.LoadIndefinitely();
+        //}
 
         if (!string.IsNullOrEmpty(_loadingParameters.title))
         {
@@ -158,6 +158,7 @@ public class LoadingScreen : MonoBehaviour
         if (_loadingParameters.showTips)
         {
             tipLabel.gameObject.SetActive(true);
+            tipLabel.text = Constants.Tips.tips[Random.Range(0, Constants.Tips.tips.Count)];
             bar.transform.localPosition = Vector2.up * tipPosY;
         }
         else

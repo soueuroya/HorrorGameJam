@@ -20,7 +20,8 @@ namespace TarodevController
         private Vector2 _frameVelocity;
         private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
-        private RigidbodyConstraints2D constraints; 
+        private RigidbodyConstraints2D constraints;
+        private bool lockMovement;
 
         #region Interface
 
@@ -44,18 +45,32 @@ namespace TarodevController
         {
             GameEventManager.PauseGame += OnGamePaused;
             GameEventManager.ResumeGame += OnGameResumed;
+            GameEventManager.MovementLocked += OnMovementLocked;
+            GameEventManager.MovementUnlocked += OnMovementUnlocked;
         }
 
         private void OnDisable()
         {
             GameEventManager.PauseGame -= OnGamePaused;
             GameEventManager.ResumeGame -= OnGameResumed;
+            GameEventManager.MovementLocked += OnMovementLocked;
+            GameEventManager.MovementUnlocked += OnMovementUnlocked;
         }
 
         private void Update()
         {
             _time += Time.deltaTime;
             GatherInput();
+        }
+
+        private void OnMovementLocked()
+        {
+            lockMovement = true;
+        }
+
+        private void OnMovementUnlocked()
+        {
+            lockMovement = false;
         }
 
         private void OnGamePaused()
@@ -106,6 +121,9 @@ namespace TarodevController
 
         private void FixedUpdate()
         {
+            if(lockMovement)
+            { return; }
+
             HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
             CheckCollisions(); // Update collisions and flags
             HandleDirection();
@@ -254,4 +272,5 @@ namespace TarodevController
         public event Action Jumped;
         public Vector2 FrameInput { get; }
     }
+
 }

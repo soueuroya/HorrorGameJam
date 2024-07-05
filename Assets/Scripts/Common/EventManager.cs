@@ -50,6 +50,8 @@ public class EventManager : MonoBehaviour
     public static event EventFired GameSceneLoadSimple;
     public static event EventFired PauseGame;
     public static event EventFired ResumeGame;
+    public static event EventFired MovementLocked;
+    public static event EventFired MovementUnlocked;
     public static event EventFired ExitGame;
 
     // Background
@@ -109,6 +111,8 @@ public class EventManager : MonoBehaviour
     public static void OnGameSceneLoadSimple()              { FireEvent(GameSceneLoadSimple); }
     public static void OnGamePause()                        { FireEvent(PauseGame); }
     public static void OnGameResume()                       { FireEvent(ResumeGame); }
+    public static void OnMovementLocked()                   { FireEvent(MovementLocked); }
+    public static void OnMovementUnlocked()                 { FireEvent(MovementUnlocked); }
     public static void OnGameExit()                         { FireEvent(ExitGame); }
 
     // Background
