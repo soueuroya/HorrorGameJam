@@ -5,6 +5,7 @@ public class Exam2Manager : MonoBehaviour
     [SerializeField] RectTransform bluryMask;
     [SerializeField] RectTransform skinMask;
     [SerializeField] float limit;
+    [SerializeField] Pathogen pathogen;
 
     private float previousValue = 0;
     private bool blur = false;

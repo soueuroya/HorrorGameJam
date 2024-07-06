@@ -5,6 +5,7 @@ public class Exam1Manager : MonoBehaviour
     [SerializeField] RectTransform xray;
     [SerializeField] Animator anim;
     [SerializeField] GameObject masks;
+    [SerializeField] Pathogen pathogen;
 
     public static Exam1Manager Instance;
     
