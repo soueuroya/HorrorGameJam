@@ -55,6 +55,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOnExam3()
     {
         exam3.gameObject.SetActive(true);
+        exam3.ResetExam();
     }
 
     public void TurnOffExam3()

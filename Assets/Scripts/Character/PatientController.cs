@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TarodevController
 {
@@ -20,8 +21,8 @@ namespace TarodevController
         private Vector2 _frameVelocity;
         private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
-        private RigidbodyConstraints2D constraints; 
-
+        private RigidbodyConstraints2D constraints;
+        private PatientSO patientData;
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
@@ -31,6 +32,8 @@ namespace TarodevController
         #endregion
 
         private float _time;
+
+        private GameObject target;
 
         private void Awake()
         {
@@ -80,16 +83,62 @@ namespace TarodevController
             _rb.velocity = _savedframeVelocity;
         }
 
+        public void SetTarget(GameObject _target)
+        {
+            target = _target;
+        }
 
+        public void SetPatientData(PatientSO _patientData)
+        {
+            patientData = _patientData;
+        }
+
+        public void SetRandomPatientData()
+        {
+            patientData = new PatientSO();
+            bool male = Random.Range(0, 1) == 0;
+
+            if (male)
+            {
+                patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
+            }
+            else
+            {
+                patientData.patientName = Constants.Patients.femaleNames[Random.Range(0, Constants.Patients.femaleNames.Count - 1)];
+            }
+            PatientImages pi = PatientManager.Instance.GetPatientImages(male);
+            patientData.skin = pi.skin;
+            patientData.torso = pi.torso;
+
+            patientData.age = Random.Range(25, 35);
+            patientData.pathogen = (Pathogen)Random.Range(0, System.Enum.GetValues(typeof(Pathogen)).Length);
+            patientData.weight = Random.Range(80, 120);
+            patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
+            patientData.symptoms = PatientManager.Instance.GetSymptoms(patientData.pathogen);
+            patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
+
+        }
 
         private void GatherInput()
         {
             _frameInput = new FrameInput
             {
-                JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
-                JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-                Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+                //JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
+                //JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
             };
+
+            if (target != null)
+            {
+                if (target.transform.position.x > transform.position.x + 0.2f)
+                {
+                    _frameInput.Move = Vector2.right;
+                }
+                else if (target.transform.position.x < transform.position.x - 0.2f)
+                {
+                    _frameInput.Move = -Vector2.right;
+                }
+            }
+            
 
             if (_stats.SnapInput)
             {
@@ -106,7 +155,7 @@ namespace TarodevController
 
         private void FixedUpdate()
         {
-            HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
+            //HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
             CheckCollisions(); // Update collisions and flags
             HandleDirection();
             HandleGravity();
