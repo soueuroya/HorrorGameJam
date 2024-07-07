@@ -8,16 +8,30 @@ public class PatientSpawner : MonoBehaviour
     [SerializeField] PatientController patientPrefab;
     [SerializeField] Transform container;
 
+    private void Update()
+    {
+        
+    }
+
 
     public void SpawnNewPatient()
     {
         PatientController pc = Instantiate(patientPrefab, container);
+        pc.transform.position = transform.position;
         pc.SetRandomPatientData();
+        if (pc.TryGoToWaitingQueue())
+        {
+        }
     }
 
     public void SpawnNewPatient(PatientSO patientData)
     {
         PatientController pc = Instantiate(patientPrefab, container);
+        pc.transform.position = transform.position;
         pc.SetPatientData(patientData);
+        if (pc.TryGoToWaitingQueue())
+        {
+
+        }
     }
 }

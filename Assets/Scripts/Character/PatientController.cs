@@ -22,7 +22,7 @@ namespace TarodevController
         private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
-        private PatientSO patientData;
+        [SerializeField] private PatientSO patientData;
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
@@ -33,7 +33,8 @@ namespace TarodevController
 
         private float _time;
 
-        private GameObject target;
+        private PatientSlot target;
+        private bool reachedTarget = false;
 
         private void Awake()
         {
@@ -83,8 +84,9 @@ namespace TarodevController
             _rb.velocity = _savedframeVelocity;
         }
 
-        public void SetTarget(GameObject _target)
+        public void SetTarget(PatientSlot _target)
         {
+            reachedTarget = false;
             target = _target;
         }
 
@@ -95,9 +97,8 @@ namespace TarodevController
 
         public void SetRandomPatientData()
         {
-            patientData = new PatientSO();
+            patientData = ScriptableObject.CreateInstance<PatientSO>();
             bool male = Random.Range(0, 1) == 0;
-
             if (male)
             {
                 patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
@@ -109,14 +110,114 @@ namespace TarodevController
             PatientImages pi = PatientManager.Instance.GetPatientImages(male);
             patientData.skin = pi.skin;
             patientData.torso = pi.torso;
-
+            patientData.visible = pi.visible;
+            patientData.blury = pi.blury;
+            patientData.infected = pi.infected;
             patientData.age = Random.Range(25, 35);
             patientData.pathogen = (Pathogen)Random.Range(0, System.Enum.GetValues(typeof(Pathogen)).Length);
             patientData.weight = Random.Range(80, 120);
             patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
             patientData.symptoms = PatientManager.Instance.GetSymptoms(patientData.pathogen);
             patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
+            patientData.stage = Random.Range(0.0f, 1.0f);
+        }
 
+        public bool TryGoToWaitingQueue()
+        {
+            target = QueueSystem.Instance.GetEmptyWaitingRoomSlot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoExam1()
+        {
+            target = QueueSystem.Instance.GetEmptyExam1Slot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoExam2()
+        {
+            target = QueueSystem.Instance.GetEmptyExam2Slot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoExam3()
+        {
+            target = QueueSystem.Instance.GetEmptyExam3Slot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoExam4()
+        {
+            target = QueueSystem.Instance.GetEmptyExam4Slot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoIsolation()
+        {
+            target = QueueSystem.Instance.GetEmptyIsolationSlot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryToGoExit()
+        {
+            target = QueueSystem.Instance.GetEmptyExitSlot(this);
+            if (target != null)
+            {
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void GatherInput()
@@ -137,6 +238,11 @@ namespace TarodevController
                 {
                     _frameInput.Move = -Vector2.right;
                 }
+                else if (!reachedTarget)
+                {
+                    reachedTarget = true;
+                    target.Reached(patientData);
+                }
             }
             
 
@@ -146,11 +252,11 @@ namespace TarodevController
                 _frameInput.Move.y = Mathf.Abs(_frameInput.Move.y) < _stats.VerticalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.y);
             }
 
-            if (_frameInput.JumpDown)
-            {
-                _jumpToConsume = true;
-                _timeJumpWasPressed = _time;
-            }
+            //if (_frameInput.JumpDown)
+            //{
+            //    _jumpToConsume = true;
+            //    _timeJumpWasPressed = _time;
+            //}
         }
 
         private void FixedUpdate()
