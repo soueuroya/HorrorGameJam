@@ -22,7 +22,9 @@ namespace TarodevController
         private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
-        private PatientSO patientData;
+        private bool goingRight = true;
+        [SerializeField] GameObject img;
+        [SerializeField] private PatientSO patientData;
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
@@ -33,7 +35,8 @@ namespace TarodevController
 
         private float _time;
 
-        private GameObject target;
+        private PatientSlot target;
+        private bool reachedTarget = true;
 
         private void Awake()
         {
@@ -83,21 +86,28 @@ namespace TarodevController
             _rb.velocity = _savedframeVelocity;
         }
 
-        public void SetTarget(GameObject _target)
-        {
-            target = _target;
-        }
+        //public void SetTarget(PatientSlot _target)
+        //{
+        //    if (reachedTarget)
+        //    {
+        //        target.Left(patientData);
+        //    }
+        //
+        //    reachedTarget = false;
+        //    target = _target;
+        //}
 
         public void SetPatientData(PatientSO _patientData)
         {
+            _patientData.controller = this;
             patientData = _patientData;
         }
 
         public void SetRandomPatientData()
         {
-            patientData = new PatientSO();
-            bool male = Random.Range(0, 1) == 0;
-
+            patientData = ScriptableObject.CreateInstance<PatientSO>();
+            bool male = Random.Range(0, 2) < 1;
+            bool old = Random.Range(0, 2) < 1;
             if (male)
             {
                 patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
@@ -106,17 +116,116 @@ namespace TarodevController
             {
                 patientData.patientName = Constants.Patients.femaleNames[Random.Range(0, Constants.Patients.femaleNames.Count - 1)];
             }
-            PatientImages pi = PatientManager.Instance.GetPatientImages(male);
+            if (old)
+            {
+                patientData.age = Random.Range(60, 75);
+            }
+            else
+            {
+                patientData.age = Random.Range(22, 32);
+            }
+            PatientImages pi = PatientManager.Instance.GetPatientImages(male, old);
             patientData.skin = pi.skin;
             patientData.torso = pi.torso;
-
-            patientData.age = Random.Range(25, 35);
+            patientData.visible = pi.visible;
+            patientData.blury = pi.blury;
+            patientData.infected = pi.infected;
             patientData.pathogen = (Pathogen)Random.Range(0, System.Enum.GetValues(typeof(Pathogen)).Length);
             patientData.weight = Random.Range(80, 120);
             patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
             patientData.symptoms = PatientManager.Instance.GetSymptoms(patientData.pathogen);
             patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
+            patientData.stage = Random.Range(0.0f, 1.0f);
+            patientData.controller = this;
+        }
 
+        public bool TrytogoTo(PatientSlot newTarget)
+        {
+            if (newTarget != null)
+            {
+                if (target != null)
+                {
+                    target.taken = false;
+                    target.patient = null;
+                    target.Left(patientData);
+                }
+
+                target = newTarget;
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TryGoToWaitingQueue()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+            return TrytogoTo(QueueSystem.Instance.GetEmptyWaitingRoomSlot(this));
+        }
+
+        public bool TryToGoExam1()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam1Slot(this));
+        }
+
+        public bool TryToGoExam2()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam2Slot(this));
+        }
+
+        public bool TryToGoExam3()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam3Slot(this));
+        }
+
+        public bool TryToGoExam4()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam4Slot(this));
+        }
+
+        public bool TryToGoIsolation()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyIsolationSlot(this));
+        }
+
+        public bool TryToGoExit()
+        {
+            if (!reachedTarget)
+            {
+                return false;
+            }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExitSlot(this));
         }
 
         private void GatherInput()
@@ -132,10 +241,25 @@ namespace TarodevController
                 if (target.transform.position.x > transform.position.x + 0.2f)
                 {
                     _frameInput.Move = Vector2.right;
+                    if (!goingRight)
+                    {
+                        img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                        goingRight = true;
+                    }
                 }
                 else if (target.transform.position.x < transform.position.x - 0.2f)
                 {
                     _frameInput.Move = -Vector2.right;
+                    if (goingRight)
+                    {
+                        goingRight = false;
+                        img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                    }
+                }
+                else if (!reachedTarget)
+                {
+                    reachedTarget = true;
+                    target.Reached(patientData);
                 }
             }
             
@@ -146,11 +270,11 @@ namespace TarodevController
                 _frameInput.Move.y = Mathf.Abs(_frameInput.Move.y) < _stats.VerticalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.y);
             }
 
-            if (_frameInput.JumpDown)
-            {
-                _jumpToConsume = true;
-                _timeJumpWasPressed = _time;
-            }
+            //if (_frameInput.JumpDown)
+            //{
+            //    _jumpToConsume = true;
+            //    _timeJumpWasPressed = _time;
+            //}
         }
 
         private void FixedUpdate()

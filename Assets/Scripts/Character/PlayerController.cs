@@ -22,6 +22,8 @@ namespace TarodevController
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
         private bool lockMovement;
+        private bool goingRight = true;
+        [SerializeField] GameObject img;
 
         #region Interface
 
@@ -66,6 +68,7 @@ namespace TarodevController
         private void OnMovementLocked()
         {
             lockMovement = true;
+            _rb.velocity = Vector2.zero;
         }
 
         private void OnMovementUnlocked()
@@ -110,6 +113,23 @@ namespace TarodevController
             {
                 _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
                 _frameInput.Move.y = Mathf.Abs(_frameInput.Move.y) < _stats.VerticalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.y);
+            }
+
+            if (_frameInput.Move.x > 0)
+            {
+                if (!goingRight)
+                {
+                    goingRight = true;
+                    img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                }
+            }
+            else if (_frameInput.Move.x < 0)
+            {
+                if (goingRight)
+                {
+                    goingRight = false;
+                    img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                }
             }
 
             if (_frameInput.JumpDown)

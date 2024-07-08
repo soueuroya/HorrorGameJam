@@ -1,4 +1,5 @@
 using RotaryHeart.Lib.SerializableDictionary;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public enum Pathogen { Normal, Xenostroma, Cerebrognatha, Pulmospora, XenostromaFP, CerebrognathaFP, PulmosporaFP, XenostromaAS, CerebrognathaAS, PulmosporaAS }
@@ -51,25 +52,38 @@ public class PatientManager : MonoBehaviour
         return symptoms[pathogen];
     }
 
-    public PatientImages GetPatientImages(bool isMale)
+    public PatientImages GetPatientImages(bool isMale, bool isOld)
     {
+        int index = 0;
+        if (isOld)
+        {
+            index = 1;
+        }
+
         if (isMale)
         {
-            return malePatientImages[Random.Range(0, malePatientImages.Count)];
+            //return malePatientImages[UnityEngine.Random.Range(0, malePatientImages.Count)];
+            return malePatientImages[index];
         }
         else
         {
-            return malePatientImages[Random.Range(0, femalePatientImages.Count)];
+            //return femalePatientImages[UnityEngine.Random.Range(0, femalePatientImages.Count)];
+            return femalePatientImages[index];
         }
     }
 }
 
+[Serializable]
 public class PatientImages
 {
     [SerializeField] public Sprite skin;
     [SerializeField] public Sprite torso;
+    [SerializeField] public Sprite visible;
+    [SerializeField] public Sprite infected;
+    [SerializeField] public Sprite blury;
 }
 
+[Serializable]
 public class PatientInfections
 {
     [SerializeField] public Pathogen pathogen;
