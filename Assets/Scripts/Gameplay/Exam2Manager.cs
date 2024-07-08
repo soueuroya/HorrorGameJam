@@ -16,6 +16,7 @@ public class Exam2Manager : MonoBehaviour
     [SerializeField] Pathogen pathogen;
     [SerializeField] Pathogen pathogen2;
     [SerializeField] TextMeshProUGUI patientName;
+    [SerializeField] Slider lineSlider;
 
     [SerializeField] Image skin;
     [SerializeField] Image blury;
@@ -23,7 +24,7 @@ public class Exam2Manager : MonoBehaviour
     [SerializeField] Image infected;
 
     [SerializeField] List<GameObject> infections;
-
+    private float initialPosition;
     private float previousValue = 0;
     private bool blur = false;
 
@@ -47,6 +48,15 @@ public class Exam2Manager : MonoBehaviour
         }
     }
     #endregion
+
+    private void Start()
+    {
+        initialPosition = lineSlider.value;
+    }
+    public void ResetExam()
+    {
+        lineSlider.value = initialPosition;
+    }
 
     public void PatientExamChanged(PatientSO patient)
     {

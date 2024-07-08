@@ -22,7 +22,7 @@ public class Exam1Manager : MonoBehaviour
     [SerializeField] Image infected;
 
     [SerializeField] List<GameObject> infections;
-
+    private Vector2 initialPosition;
     public static Exam1Manager Instance;
     
     #region Initialization
@@ -42,7 +42,17 @@ public class Exam1Manager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        initialPosition = xray.position;
+    }
+
     #endregion
+    public void ResetExam()
+    {
+        xray.position = initialPosition;
+        masks.SetActive(false);
+    }
 
     public void PatientExamChanged(PatientSO patient)
     {
