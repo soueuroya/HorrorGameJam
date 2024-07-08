@@ -1,5 +1,6 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +14,10 @@ public class Exam3Manager : MonoBehaviour
     [SerializeField] GameObject monitor;
     [SerializeField] RectTransform target;
     [SerializeField] Pathogen pathogen;
+    [SerializeField] Pathogen pathogen2;
+    [SerializeField] TextMeshProUGUI patientName;
 
-    [SerializeField] Image skin;
+    [SerializeField] Image torso;
     [SerializeField] Image visible;
     [SerializeField] Image infected;
 
@@ -71,7 +74,7 @@ public class Exam3Manager : MonoBehaviour
 
         if (helmet.position.y <= target.position.y)
         {
-            helmet.position = target.position;
+            helmet.position = Vector2.right * helmet.position.x + Vector2.up * target.position.y;
             EndReached();
         }
     }
@@ -101,12 +104,13 @@ public class Exam3Manager : MonoBehaviour
             PatientExamChanged(patient);
         });
 
+        patientName.text = patient.patientName;
         hasPatient = true;
-        skin.gameObject.SetActive(true);
-        skin.sprite = patient.skin;
+        torso.gameObject.SetActive(true);
+        torso.sprite = patient.torso;
 
         TurnInfectionsOff();
-        if (pathogen == patient.pathogen) // if patient is infected show the infected images
+        if (pathogen == patient.pathogen || pathogen2 == patient.pathogen) // if patient is infected show the infected images
         {
             infected.sprite = patient.infected;
             visible.gameObject.SetActive(false);
@@ -173,8 +177,9 @@ public class Exam3Manager : MonoBehaviour
     {
         TurnInfectionsOff();
 
-        skin.gameObject.SetActive(false);
+        torso.gameObject.SetActive(false);
         visible.gameObject.SetActive(false);
         infected.gameObject.SetActive(false);
+        patientName.text = "";
     }
 }

@@ -7,6 +7,8 @@ public class PatientSpawner : MonoBehaviour
 {
     [SerializeField] PatientController patientPrefab;
     [SerializeField] Transform container;
+    [SerializeField] int waitBeforeStart;
+    [SerializeField] int waitBetween;
 
     private void Update()
     {

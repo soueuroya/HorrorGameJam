@@ -1,5 +1,6 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class Exam1Manager : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] GameObject masks;
     [SerializeField] Pathogen pathogen;
+    [SerializeField] Pathogen pathogen2;
+    [SerializeField] TextMeshProUGUI patientName;
 
     [SerializeField] Image skin;
     [SerializeField] Image visible;
@@ -85,6 +88,7 @@ public class Exam1Manager : MonoBehaviour
         skin.gameObject.SetActive(false);
         visible.gameObject.SetActive(false);
         infected.gameObject.SetActive(false);
+        patientName.text = "";
     }
 
 public void PatientArrived(PatientSO patient)
@@ -94,15 +98,16 @@ public void PatientArrived(PatientSO patient)
             PatientExamChanged(patient);
         });
 
+        patientName.text = patient.patientName;
         skin.gameObject.SetActive(true);
         skin.sprite = patient.skin;
 
         TurnInfectionsOff();
-        if (pathogen == patient.pathogen) // if patient is infected show the infected images
+        if (pathogen == patient.pathogen || pathogen2 == patient.pathogen) // if patient is infected show the infected images
         {
             visible.gameObject.SetActive(false);
             infected.gameObject.SetActive(true);
-            TurnRandomInfectionsOn(Mathf.RoundToInt(patient.stage * 10));
+            TurnRandomInfectionsOn(10);
         }
         else
         {

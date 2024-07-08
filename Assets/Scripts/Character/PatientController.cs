@@ -22,6 +22,8 @@ namespace TarodevController
         private Vector2 _savedframeVelocity;
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
+        private bool goingRight = true;
+        [SerializeField] GameObject img;
         [SerializeField] private PatientSO patientData;
         #region Interface
 
@@ -34,7 +36,7 @@ namespace TarodevController
         private float _time;
 
         private PatientSlot target;
-        private bool reachedTarget = false;
+        private bool reachedTarget = true;
 
         private void Awake()
         {
@@ -84,21 +86,28 @@ namespace TarodevController
             _rb.velocity = _savedframeVelocity;
         }
 
-        public void SetTarget(PatientSlot _target)
-        {
-            reachedTarget = false;
-            target = _target;
-        }
+        //public void SetTarget(PatientSlot _target)
+        //{
+        //    if (reachedTarget)
+        //    {
+        //        target.Left(patientData);
+        //    }
+        //
+        //    reachedTarget = false;
+        //    target = _target;
+        //}
 
         public void SetPatientData(PatientSO _patientData)
         {
+            _patientData.controller = this;
             patientData = _patientData;
         }
 
         public void SetRandomPatientData()
         {
             patientData = ScriptableObject.CreateInstance<PatientSO>();
-            bool male = Random.Range(0, 1) == 0;
+            bool male = Random.Range(0, 2) < 1;
+            bool old = Random.Range(0, 2) < 1;
             if (male)
             {
                 patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
@@ -107,117 +116,116 @@ namespace TarodevController
             {
                 patientData.patientName = Constants.Patients.femaleNames[Random.Range(0, Constants.Patients.femaleNames.Count - 1)];
             }
-            PatientImages pi = PatientManager.Instance.GetPatientImages(male);
+            if (old)
+            {
+                patientData.age = Random.Range(60, 75);
+            }
+            else
+            {
+                patientData.age = Random.Range(22, 32);
+            }
+            PatientImages pi = PatientManager.Instance.GetPatientImages(male, old);
             patientData.skin = pi.skin;
             patientData.torso = pi.torso;
             patientData.visible = pi.visible;
             patientData.blury = pi.blury;
             patientData.infected = pi.infected;
-            patientData.age = Random.Range(25, 35);
             patientData.pathogen = (Pathogen)Random.Range(0, System.Enum.GetValues(typeof(Pathogen)).Length);
             patientData.weight = Random.Range(80, 120);
             patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
             patientData.symptoms = PatientManager.Instance.GetSymptoms(patientData.pathogen);
             patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
             patientData.stage = Random.Range(0.0f, 1.0f);
+            patientData.controller = this;
+        }
+
+        public bool TrytogoTo(PatientSlot newTarget)
+        {
+            if (newTarget != null)
+            {
+                if (target != null)
+                {
+                    target.taken = false;
+                    target.patient = null;
+                    target.Left(patientData);
+                }
+
+                target = newTarget;
+                reachedTarget = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool TryGoToWaitingQueue()
         {
-            target = QueueSystem.Instance.GetEmptyWaitingRoomSlot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+            return TrytogoTo(QueueSystem.Instance.GetEmptyWaitingRoomSlot(this));
         }
 
         public bool TryToGoExam1()
         {
-            target = QueueSystem.Instance.GetEmptyExam1Slot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam1Slot(this));
         }
 
         public bool TryToGoExam2()
         {
-            target = QueueSystem.Instance.GetEmptyExam2Slot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam2Slot(this));
         }
 
         public bool TryToGoExam3()
         {
-            target = QueueSystem.Instance.GetEmptyExam3Slot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam3Slot(this));
         }
 
         public bool TryToGoExam4()
         {
-            target = QueueSystem.Instance.GetEmptyExam4Slot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExam4Slot(this));
         }
 
         public bool TryToGoIsolation()
         {
-            target = QueueSystem.Instance.GetEmptyIsolationSlot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyIsolationSlot(this));
         }
 
         public bool TryToGoExit()
         {
-            target = QueueSystem.Instance.GetEmptyExitSlot(this);
-            if (target != null)
-            {
-                reachedTarget = false;
-                return true;
-            }
-            else
+            if (!reachedTarget)
             {
                 return false;
             }
+
+            return TrytogoTo(QueueSystem.Instance.GetEmptyExitSlot(this));
         }
 
         private void GatherInput()
@@ -233,10 +241,20 @@ namespace TarodevController
                 if (target.transform.position.x > transform.position.x + 0.2f)
                 {
                     _frameInput.Move = Vector2.right;
+                    if (!goingRight)
+                    {
+                        img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                        goingRight = true;
+                    }
                 }
                 else if (target.transform.position.x < transform.position.x - 0.2f)
                 {
                     _frameInput.Move = -Vector2.right;
+                    if (goingRight)
+                    {
+                        goingRight = false;
+                        img.transform.localScale = img.transform.localScale.y * Vector2.up + img.transform.localScale.x * -Vector2.right;
+                    }
                 }
                 else if (!reachedTarget)
                 {

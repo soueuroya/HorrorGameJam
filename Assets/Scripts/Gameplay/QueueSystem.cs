@@ -152,9 +152,119 @@ public class QueueSystem : MonoBehaviour
 
         return null;
     }
+    
+    /*
+    public void SendPatientToExam1(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
 
+            if (item.patient.TryToGoExam1())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    public void SendPatientToExam2(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
+
+            if (item.patient.TryToGoExam2())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    public void SendPatientToExam3(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
+
+            if (item.patient.TryToGoExam3())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    public void SendPatientToExam4(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
+
+            if (item.patient.TryToGoExam4())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    public void SendPatientToIsolation(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
+
+            if (item.patient.TryToGoIsolation())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    public void SendPatientToExit(PatientController _patient)
+    {
+        foreach (var item in QueueSystem.Instance.waitingRoomSlots)
+        {
+            if (!item.taken)
+            {
+                continue;
+            }
+
+            if (item.patient.TryToGoExit())
+            {
+                item.taken = false;
+                item.patient = null;
+            }
+
+            break;
+        }
+    }
+    
+    
     ////// testing functions
-
     public void SendPatientToExam1()
     {
         foreach (var item in QueueSystem.Instance.waitingRoomSlots)
@@ -192,7 +302,6 @@ public class QueueSystem : MonoBehaviour
             break;
         }
     }
-
     public void SendPatientToExam3()
     {
         foreach (var item in QueueSystem.Instance.waitingRoomSlots)
@@ -229,7 +338,6 @@ public class QueueSystem : MonoBehaviour
             break;
         }
     }
-
     public void SendPatientToIsolation()
     {
         foreach (var item in QueueSystem.Instance.waitingRoomSlots)
@@ -248,7 +356,6 @@ public class QueueSystem : MonoBehaviour
             break;
         }
     }
-
     public void SendPatientToExit()
     {
         foreach (var item in QueueSystem.Instance.waitingRoomSlots)
@@ -267,4 +374,5 @@ public class QueueSystem : MonoBehaviour
             break;
         }
     }
+    */
 }

@@ -1,5 +1,6 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class Exam2Manager : MonoBehaviour
     [SerializeField] RectTransform skinMask;
     [SerializeField] float limit;
     [SerializeField] Pathogen pathogen;
+    [SerializeField] Pathogen pathogen2;
+    [SerializeField] TextMeshProUGUI patientName;
 
     [SerializeField] Image skin;
     [SerializeField] Image blury;
@@ -57,13 +60,14 @@ public class Exam2Manager : MonoBehaviour
             PatientExamChanged(patient);
         });
 
+        patientName.text = patient.patientName;
         skin.gameObject.SetActive(true);
         skin.sprite = patient.skin;
         blury.gameObject.SetActive(true);
         blury.sprite = patient.blury;
 
         TurnInfectionsOff();
-        if (pathogen == patient.pathogen) // if patient is infected show the infected images
+        if (pathogen == patient.pathogen || pathogen2 == patient.pathogen) // if patient is infected show the infected images
         {
             infected.sprite = patient.infected;
             visible.gameObject.SetActive(false);
@@ -156,6 +160,7 @@ public class Exam2Manager : MonoBehaviour
         blury.gameObject.SetActive(false);
         visible.gameObject.SetActive(false);
         infected.gameObject.SetActive(false);
+        patientName.text = "";
     }
 }
 

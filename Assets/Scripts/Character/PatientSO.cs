@@ -1,3 +1,4 @@
+using TarodevController;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +23,9 @@ public class PatientSO : ScriptableObject
     public Sprite visible;
     public Sprite infected;
     public Sprite torso;
+    public bool inIso = false;
+    public PatientController controller;
+    public int currentState = 0;
 
     public UnityEvent<PatientSO> onChanged = new UnityEvent<PatientSO>();
 
@@ -30,6 +34,11 @@ public class PatientSO : ScriptableObject
         blood = _newData.blood;
         pathogen = _newData.pathogen;
         stage = _newData.stage;
+
+        if (_newData.controller != null)
+        {
+            controller = _newData.controller;
+        }
 
         if (!string.IsNullOrEmpty(_newData.patientName))
         {

@@ -52,15 +52,23 @@ public class PatientManager : MonoBehaviour
         return symptoms[pathogen];
     }
 
-    public PatientImages GetPatientImages(bool isMale)
+    public PatientImages GetPatientImages(bool isMale, bool isOld)
     {
+        int index = 0;
+        if (isOld)
+        {
+            index = 1;
+        }
+
         if (isMale)
         {
-            return malePatientImages[UnityEngine.Random.Range(0, malePatientImages.Count)];
+            //return malePatientImages[UnityEngine.Random.Range(0, malePatientImages.Count)];
+            return malePatientImages[index];
         }
         else
         {
-            return malePatientImages[UnityEngine.Random.Range(0, femalePatientImages.Count)];
+            //return femalePatientImages[UnityEngine.Random.Range(0, femalePatientImages.Count)];
+            return femalePatientImages[index];
         }
     }
 }

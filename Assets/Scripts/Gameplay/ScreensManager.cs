@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class ExamsManager : MonoBehaviour
+public class ScreensManager : MonoBehaviour
 {
-    public static ExamsManager Instance;
+    public static ScreensManager Instance;
 
     [SerializeField] Exam1Manager exam1;
     [SerializeField] Exam2Manager exam2;
@@ -10,7 +10,7 @@ public class ExamsManager : MonoBehaviour
     [SerializeField] Exam3Manager exam4;
     [SerializeField] WaitingListManager waitingList;
     [SerializeField] StaffManagementManager staffManagement;
-    [SerializeField] PatienfInfoManager patientInfo;
+    [SerializeField] PatientInfoManager patientInfo;
 
 
     #region Initialization
@@ -40,6 +40,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffExam1()
     {
         exam1.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnExam2()
@@ -50,6 +51,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffExam2()
     {
         exam2.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnExam3()
@@ -61,6 +63,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffExam3()
     {
         exam3.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnExam4()
@@ -71,6 +74,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffExam4()
     {
         exam4.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnWaitingList()
@@ -81,6 +85,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffWaitingList()
     {
         waitingList.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnStaffManagement()
@@ -91,6 +96,7 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffStaffManagement()
     {
         staffManagement.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 
     public void TurnOnPatienfInfo()
@@ -101,5 +107,6 @@ public class ExamsManager : MonoBehaviour
     public void TurnOffPatientInfo()
     {
         patientInfo.gameObject.SetActive(false);
+        PatientInfoManager.Instance.Hide();
     }
 }
