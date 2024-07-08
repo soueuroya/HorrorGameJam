@@ -24,7 +24,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-5491396916898713723
+--- !u!114 &-7052814360033839616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34,17 +34,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Desktop/Master.strings.bank
+  m_Name: bank:/Master.strings.bank
   m_EditorClassIdentifier: 
-  Path: Assets/FMODBanks/Desktop/Master.strings.bank
-  Name: Desktop/Master.strings
+  Path: Assets/FMODBanks 1/Desktop/Master.strings.bank
+  Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638560614588699976
+  lastModified: 638560657390259542
   FileSizes:
   - Name: 
     Value: 908
   Exists: 1
---- !u!114 &-4406364267276400307
+--- !u!114 &-3793808124886921318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,12 +54,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Desktop/Master.bank
+  m_Name: bank:/Master.bank
   m_EditorClassIdentifier: 
-  Path: Assets/FMODBanks/Desktop/Master.bank
-  Name: Desktop/Master
+  Path: Assets/FMODBanks 1/Desktop/Master.bank
+  Name: Master
   StudioPath: bank:/Master
-  lastModified: 638560614588688479
+  lastModified: 638560657390234486
   FileSizes: []
   Exists: 1
 --- !u!114 &-3388482787113789010
@@ -99,17 +99,17 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -5491396916898713723}
-  - {fileID: -4406364267276400307}
+  - {fileID: -7052814360033839616}
+  - {fileID: -3793808124886921318}
   EditorEvents:
   - {fileID: 306378989772445745}
   EditorParameters:
   - {fileID: -3388482787113789010}
   MasterBanks:
-  - {fileID: -4406364267276400307}
+  - {fileID: -3793808124886921318}
   StringsBanks:
-  - {fileID: -5491396916898713723}
-  cacheTime: 638560614588699976
+  - {fileID: -7052814360033839616}
+  cacheTime: 638560657390259542
   cacheVersion: 131608
 --- !u!114 &306378989772445745
 MonoBehaviour:
@@ -130,7 +130,7 @@ MonoBehaviour:
     Data3: -593266774
     Data4: -586932439
   Banks:
-  - {fileID: -4406364267276400307}
+  - {fileID: -3793808124886921318}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
