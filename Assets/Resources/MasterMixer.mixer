@@ -41,20 +41,6 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &-6974538755700228504
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 171a42135b8771f4c942ecb57b40dd82
-  m_EffectName: Attenuation
-  m_MixLevel: 2b31d6b7fff68a24c9f656fc3402e008
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!243 &-5231152276855491404
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -71,25 +57,6 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -3022573060049067557}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
---- !u!243 &-4326916134672165940
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ForceMono
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 7b27242e2820877468e06fbe2d1e526c
-  m_Children: []
-  m_Volume: ecb4e6f8323278740bfb09f7f7649b3d
-  m_Pitch: 1bfde99a9ddcaa445894f6f5ec95a995
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: -6974538755700228504}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -131,8 +98,7 @@ AudioMixerGroupController:
   m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 98bb0b0ab69a6b042bd151788d688a7a
-  m_Children:
-  - {fileID: -4326916134672165940}
+  m_Children: []
   m_Volume: a5604632ad45c6e4689d89c19ec9e8b7
   m_Pitch: fe23d9df31e39984c811dfeda600f50e
   m_Send: 00000000000000000000000000000000
@@ -175,7 +141,6 @@ AudioMixerController:
     - 8f60d324188c5f440814a349dc9b985e
     - 0b606ce9ca7affc4ea56765aac89cdc6
     - 98bb0b0ab69a6b042bd151788d688a7a
-    - 7b27242e2820877468e06fbe2d1e526c
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}

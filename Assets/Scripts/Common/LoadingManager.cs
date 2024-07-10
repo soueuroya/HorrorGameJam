@@ -113,6 +113,18 @@ public class LoadingManager : MonoBehaviour
     {
         //// Hide loading screen
         // Release assets
+        if (LoadingScreen.Instance._IsSlow)
+        {
+            Invoke("DelayedOnSceneUnloaded", 2);
+        }
+        else
+        {
+            LoadingScreen.Instance.Hide();
+        }
+    }
+
+    private void DelayedOnSceneUnloaded()
+    {
         LoadingScreen.Instance.Hide();
     }
 

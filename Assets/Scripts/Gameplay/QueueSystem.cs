@@ -123,13 +123,13 @@ public class QueueSystem : MonoBehaviour
     {
         foreach (var item in QueueSystem.Instance.isolationSlots)
         {
-            if (item.taken)
-            {
-                continue;
-            }
+            //if (item.taken)
+            //{
+            //    continue;
+            //}
 
             item.patient = _patient;
-            item.taken = true;
+            //item.taken = true;
             return item;
         }
 

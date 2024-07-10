@@ -10,6 +10,9 @@ public class PatientSpawner : MonoBehaviour
     [SerializeField] int waitBeforeStart;
     [SerializeField] int waitBetween;
 
+    public int missedPatients = 0;
+    public int missedInfected = 0;
+
     private void Update()
     {
         
@@ -23,6 +26,18 @@ public class PatientSpawner : MonoBehaviour
         pc.SetRandomPatientData();
         if (pc.TryGoToWaitingQueue())
         {
+
+        }
+        else
+        {
+            missedPatients++;
+            if (pc.patientData.pathogen == Pathogen.Cerebrognatha || pc.patientData.pathogen == Pathogen.CerebrognathaAS ||
+                pc.patientData.pathogen == Pathogen.Pulmospora || pc.patientData.pathogen == Pathogen.PulmosporaAS ||
+                pc.patientData.pathogen == Pathogen.Xenostroma || pc.patientData.pathogen == Pathogen.XenostromaAS)
+            {
+                missedInfected++;
+            }
+            Destroy(pc.gameObject);
         }
     }
 
@@ -34,6 +49,17 @@ public class PatientSpawner : MonoBehaviour
         if (pc.TryGoToWaitingQueue())
         {
 
+        }
+        else
+        {
+            missedPatients++;
+            if (pc.patientData.pathogen == Pathogen.Cerebrognatha || pc.patientData.pathogen == Pathogen.CerebrognathaAS ||
+                pc.patientData.pathogen == Pathogen.Pulmospora || pc.patientData.pathogen == Pathogen.PulmosporaAS ||
+                pc.patientData.pathogen == Pathogen.Xenostroma || pc.patientData.pathogen == Pathogen.XenostromaAS)
+            {
+                missedInfected++;
+            }
+            Destroy(pc.gameObject);
         }
     }
 }

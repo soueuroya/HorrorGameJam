@@ -99,10 +99,19 @@ public class Exam3Manager : MonoBehaviour
 
     public void PatientArrived(PatientSO patient)
     {
-        patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
-        patient.onChanged.AddListener((patient) => {
-            PatientExamChanged(patient);
-        });
+        if (!patientExamLines.ContainsKey(patient))
+        {
+            patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
+            patient.onChanged.AddListener((patient) =>
+            {
+                PatientExamChanged(patient);
+            });
+        }
+        else
+        {
+            patientExamLines[patient].TurnOnFolder();
+            patientExamLines[patient].TurnOnToggle();
+        }
 
         patientName.text = patient.patientName;
         hasPatient = true;
@@ -164,8 +173,10 @@ public class Exam3Manager : MonoBehaviour
 
         if (patientExamLines.ContainsKey(patient))
         {
-            Destroy(patientExamLines[patient]);
-            patientExamLines.Remove(patient);
+            patientExamLines[patient].TurnOffFolder();
+            patientExamLines[patient].TurnOffToggle();
+            //Destroy(patientExamLines[patient]);
+            //patientExamLines.Remove(patient);
         }
 
         TurnOffEverything();

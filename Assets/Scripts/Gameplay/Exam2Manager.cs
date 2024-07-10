@@ -65,10 +65,19 @@ public class Exam2Manager : MonoBehaviour
 
     public void PatientArrived(PatientSO patient)
     {
-        patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
-        patient.onChanged.AddListener((patient) => {
-            PatientExamChanged(patient);
-        });
+        if (!patientExamLines.ContainsKey(patient))
+        {
+            patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
+            patient.onChanged.AddListener((patient) =>
+            {
+                PatientExamChanged(patient);
+            });
+        }
+        else
+        {
+            patientExamLines[patient].TurnOnFolder();
+            patientExamLines[patient].TurnOnToggle();
+        }
 
         patientName.text = patient.patientName;
         skin.gameObject.SetActive(true);
@@ -106,8 +115,10 @@ public class Exam2Manager : MonoBehaviour
     {
         if (patientExamLines.ContainsKey(patient))
         {
-            Destroy(patientExamLines[patient]);
-            patientExamLines.Remove(patient);
+            patientExamLines[patient].TurnOffFolder();
+            patientExamLines[patient].TurnOffToggle();
+            //Destroy(patientExamLines[patient]);
+            //patientExamLines.Remove(patient);
         }
 
         TurnOffEverything();

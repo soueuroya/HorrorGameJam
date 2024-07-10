@@ -5,6 +5,7 @@ public class LoadingParameters {
     public string title = "";
     public string description = "";
     public bool showTips = false;
+    public bool slow = false;
     //public bool isIndefinite;
 }
 
@@ -27,6 +28,7 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] float tipPosY;
 
     [SerializeField] private bool _IsOn;
+    public bool _IsSlow;
     public bool IsOn
     {
         get => _IsOn;
@@ -127,13 +129,16 @@ public class LoadingScreen : MonoBehaviour
             descriptionLabel.gameObject.SetActive(false);
             tipLabel.gameObject.SetActive(false);
             bar.transform.localPosition = Vector2.up * tiplessPosY;
+            _IsSlow = false;
             return;
         }
-        
+
         //if (_loadingParameters.isIndefinite)
         //{
         //    LoadingBarManager.Instance.LoadIndefinitely();
         //}
+
+        _IsSlow = _loadingParameters.slow;
 
         if (!string.IsNullOrEmpty(_loadingParameters.title))
         {

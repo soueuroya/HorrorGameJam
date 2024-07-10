@@ -24,7 +24,7 @@ namespace TarodevController
         private RigidbodyConstraints2D constraints;
         private bool goingRight = true;
         [SerializeField] GameObject img;
-        [SerializeField] private PatientSO patientData;
+        [SerializeField] public PatientSO patientData;
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
