@@ -17,6 +17,8 @@ public class MusicManager : MonoBehaviour
     // Private properties
     float delayUntilNextSong = 0f; // Delay in-between songs
     float maxVolume = 1f; // Max volume
+    public bool isPlaying = false;
+    public bool playOnStart = false;
 
     #region Initialization
     private void OnValidate()
@@ -42,7 +44,10 @@ public class MusicManager : MonoBehaviour
                 if (audioSource.clip != null)
                 {
                     Instance.audioSource.loop = audioSource.loop;
-                    Instance.StartMusic(audioSource.clip);
+                    if (this.playOnStart)
+                    {
+                        Instance.StartMusic(audioSource.clip);
+                    }
                 }
                 else
                 {
@@ -53,15 +58,18 @@ public class MusicManager : MonoBehaviour
             }
         }
 
-        if (!audioSource.isPlaying)
+        if (this.playOnStart)
         {
-            if (audioSource.clip != null)
+            if (!audioSource.isPlaying)
             {
-                StartMusic(audioSource.clip);
-            }
-            else
-            {
-                Debug.LogError("Audio source clip is null -2-");
+                if (audioSource.clip != null)
+                {
+                    StartMusic(audioSource.clip);
+                }
+                else
+                {
+                    Debug.LogError("Audio source clip is null -2-");
+                }
             }
         }
     }
@@ -86,6 +94,16 @@ public class MusicManager : MonoBehaviour
     public void StartAgain()
     {
         StartMusic(audioSource.clip);
+    }
+
+    public void Resume()
+    {
+        audioSource.Play();
+    }
+
+    public void Pause()
+    {
+        audioSource.Pause();
     }
 
     public void StartMusic(AudioClip _nextClip)
@@ -130,11 +148,14 @@ public class MusicManager : MonoBehaviour
                 AddFadeToEndOfMusic(); // Add fade automatic OUT
             //}
         }
+
+        isPlaying = true;
     }
 
     public void StopMusic()
     {
         FadeMusicTo(AnimationTimers.MUSIC_FADEOUT, 0);
+        isPlaying = false;
     }
 
     public void FadeMusicTo(float _fadeLenght, float _fadeToValue, Action _callback = null)

@@ -330,7 +330,7 @@ Transform:
   m_GameObject: {fileID: 3549042771314384857}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.72, y: -1, z: -10}
+  m_LocalPosition: {x: 24, y: -3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -371,7 +371,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -410,7 +410,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -877,6 +877,7 @@ MonoBehaviour:
   tiplessPosY: 0
   tipPosY: 0
   _IsOn: 0
+  _IsSlow: 0
 --- !u!82 &8335013933440529143
 AudioSource:
   m_ObjectHideFlags: 0
