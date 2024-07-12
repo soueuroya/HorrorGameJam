@@ -23,14 +23,6 @@ public class DialogueInteract : MonoBehaviour
         SetCharacterText("");
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            StartDialogue();
-        }
-    }
-
     public void SetCharacterText(string myText)
     {
         characterDialogueTextbox.GetComponent<TMP_Text>().text = myText;
@@ -88,5 +80,6 @@ public class DialogueInteract : MonoBehaviour
         dialogueButtonParent.SetActive(false);
         optionSelected = false;
         spawnedButtons.ForEach(x => Destroy(x));
+        GameEventManager.OnMovementUnlocked();
     }
 }
