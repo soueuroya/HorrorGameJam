@@ -45,6 +45,11 @@ public class WaitingListManager : MonoBehaviour
 
     public void PatientArrived(PatientSO patient)
     {
+        if (patientLines.ContainsKey(patient))
+        {
+            return;
+        }
+
         patientLines.Add(patient, Instantiate(patientLinePrefab, arrivedContent));
         patient.onChanged.AddListener((patient) => {
             PatientChanged(patient); 
@@ -59,6 +64,11 @@ public class WaitingListManager : MonoBehaviour
         {
             Destroy(patientLines[patient].gameObject);
             patientLines.Remove(patient);
+        }
+
+        if (patientSimpleLines.ContainsKey(patient))
+        {
+            return;
         }
 
         //patient.onChanged.RemoveAllListeners();
@@ -79,8 +89,10 @@ public class WaitingListManager : MonoBehaviour
 
         if (patientSimpleLines.ContainsKey(patient))
         {
-            Destroy(patientSimpleLines[patient]);
-            patientSimpleLines.Remove(patient);
+            //patientSimpleLines[patient].TurnOffFolder();
+            patientSimpleLines[patient].TurnOffToggle();
+            //Destroy(patientSimpleLines[patient]);
+            //patientSimpleLines.Remove(patient);
         }
 
         patient.onChanged.RemoveAllListeners();

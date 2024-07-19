@@ -35,6 +35,7 @@ public class ScreensManager : MonoBehaviour
     public void TurnOnExam1()
     {
         exam1.gameObject.SetActive(true);
+        exam1.ResetExam();
     }
 
     public void TurnOffExam1()
@@ -46,6 +47,7 @@ public class ScreensManager : MonoBehaviour
     public void TurnOnExam2()
     {
         exam2.gameObject.SetActive(true);
+        exam2.ResetExam();
     }
 
     public void TurnOffExam2()

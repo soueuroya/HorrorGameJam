@@ -26,4 +26,24 @@ public class PatientLineSimple : MonoBehaviour
             });
         }
     }
+
+    public void TurnOffFolder()
+    {
+        folder.interactable = false;
+    }
+
+    public void TurnOffToggle()
+    {
+        toggle.interactable = false;
+    }
+
+    public void TurnOnFolder()
+    {
+        folder.interactable = true;
+    }
+
+    public void TurnOnToggle()
+    {
+        toggle.interactable = true;
+    }
 }

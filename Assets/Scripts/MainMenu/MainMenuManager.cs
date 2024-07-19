@@ -79,25 +79,25 @@ public class MainMenuManager : BaseMenu
     public void OnStartGameSelected()
     {
         AudioManager.Instance.PlayBigAccept();
-        LoadingManager.Instance.LoadScene("Game", new LoadingParameters() { title = "LOADING GAME", showTips = true });
+        LoadingManager.Instance.LoadScene("Game", new LoadingParameters() { showTips = true });
     }
 
     public void OnTutorialSelected()
     {
         AudioManager.Instance.PlayAccept();
-        LoadingManager.Instance.LoadScene("Tutorial", new LoadingParameters() { title = "LOADING TUTORIAL", showTips = true });
+        LoadingManager.Instance.LoadScene("Tutorial", new LoadingParameters() { showTips = true });
     }
 
     public void OnCreditsSelected()
     {
         AudioManager.Instance.PlayAccept();
-        LoadingManager.Instance.LoadScene("Credits", new LoadingParameters() { title = "LOADING CREDITS", showTips = true });
+        LoadingManager.Instance.LoadScene("Credits", new LoadingParameters() { showTips = true });
     }
 
     public void OnSettingsSelected()
     {
         AudioManager.Instance.PlayAccept();
-        LoadingManager.Instance.LoadScene("Settings", new LoadingParameters() { title = "LOADING SETTINGS", showTips = true });
+        LoadingManager.Instance.LoadScene("Settings", new LoadingParameters() { showTips = true });
     }
 
     public void OnExistGameSelected()

@@ -13,6 +13,8 @@ public class PatientInfoManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bloodLabel;
     [SerializeField] TextMeshProUGUI symptomsLabel;
     [SerializeField] TMP_Dropdown dropdown;
+    [SerializeField] TextMeshProUGUI sendLabel;
+    [SerializeField] TextMeshProUGUI warningLabel;
     int currentLocation;
 
     public static PatientInfoManager Instance;
@@ -48,8 +50,18 @@ public class PatientInfoManager : MonoBehaviour
         occupationLabel.text = patientData.profession;
         bloodLabel.text = patientData.blood.ToString().Replace("n", "-").Replace("p", "+");
         symptomsLabel.text = patientData.symptoms;
-        dropdown.SetValueWithoutNotify(patientData.currentState);
         dropdown.onValueChanged.RemoveAllListeners();
+        dropdown.value = patientData.currentState;
+        if (patientData.currentState == 4 || patientData.currentState == 5)
+        {
+            sendLabel.text = "Sent to";
+            dropdown.interactable = false;
+        }
+        else
+        {
+            sendLabel.text = "Send to";
+            dropdown.interactable = true;
+        }
         currentLocation = dropdown.value;
         dropdown.onValueChanged.AddListener((value) => {
             PatientSO patientToSend = patientData;
@@ -62,6 +74,7 @@ public class PatientInfoManager : MonoBehaviour
 
     public void Hide()
     {
+        warningLabel.text = "";
         canvasGroup.interactable = false;
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
@@ -75,11 +88,13 @@ public class PatientInfoManager : MonoBehaviour
                 if (patient.controller.TryGoToWaitingQueue())
                 {
                     currentLocation = location;
+                    patient.currentState = currentLocation;
                     Hide();
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Waiting Area is full";
+                    dropdown.value = currentLocation;
                 }
                 break;
 
@@ -88,12 +103,14 @@ public class PatientInfoManager : MonoBehaviour
                 {
                     {
                         currentLocation = location;
+                        patient.currentState = currentLocation;
                         Hide();
                     }
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Exam already has patient";
+                    dropdown.value = currentLocation;
                 }
                 break;
 
@@ -102,12 +119,14 @@ public class PatientInfoManager : MonoBehaviour
                 {
                     {
                         currentLocation = location;
+                        patient.currentState = currentLocation;
                         Hide();
                     }
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Exam already has patient";
+                    dropdown.value = currentLocation;
                 }
                 break;
 
@@ -116,12 +135,14 @@ public class PatientInfoManager : MonoBehaviour
                 {
                     {
                         currentLocation = location;
+                        patient.currentState = currentLocation;
                         Hide();
                     }
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Exam already has patient";
+                    dropdown.value = currentLocation;
                 }
                 break;
 
@@ -130,12 +151,14 @@ public class PatientInfoManager : MonoBehaviour
                 {
                     {
                         currentLocation = location;
+                        patient.currentState = currentLocation;
                         Hide();
                     }
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Isolation is full";
+                    dropdown.value = currentLocation;
                 }
                 break;
 
@@ -144,12 +167,14 @@ public class PatientInfoManager : MonoBehaviour
                 {
                     {
                         currentLocation = location;
+                        patient.currentState = currentLocation;
                         Hide();
                     }
                 }
                 else
                 {
-                    dropdown.SetValueWithoutNotify(location);
+                    warningLabel.text = "Too many patients on the strees. Do you have any idea what's going on?";
+                    dropdown.value = currentLocation;
                 }
 
                 break;

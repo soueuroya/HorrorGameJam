@@ -5,6 +5,7 @@ public class LoadingParameters {
     public string title = "";
     public string description = "";
     public bool showTips = false;
+    public bool slow = false;
     //public bool isIndefinite;
 }
 
@@ -23,10 +24,11 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI tipLabel;
     [SerializeField] GameObject bar;
 
-    [SerializeField] float tiplessPosY;
-    [SerializeField] float tipPosY;
+    //[SerializeField] float tiplessPosY;
+    //[SerializeField] float tipPosY;
 
     [SerializeField] private bool _IsOn;
+    public bool _IsSlow;
     public bool IsOn
     {
         get => _IsOn;
@@ -126,14 +128,17 @@ public class LoadingScreen : MonoBehaviour
             titleLabel.gameObject.SetActive(false);
             descriptionLabel.gameObject.SetActive(false);
             tipLabel.gameObject.SetActive(false);
-            bar.transform.localPosition = Vector2.up * tiplessPosY;
+            //bar.transform.localPosition = Vector2.up * tiplessPosY;
+            _IsSlow = false;
             return;
         }
-        
+
         //if (_loadingParameters.isIndefinite)
         //{
         //    LoadingBarManager.Instance.LoadIndefinitely();
         //}
+
+        _IsSlow = _loadingParameters.slow;
 
         if (!string.IsNullOrEmpty(_loadingParameters.title))
         {
@@ -159,12 +164,12 @@ public class LoadingScreen : MonoBehaviour
         {
             tipLabel.gameObject.SetActive(true);
             tipLabel.text = Constants.Tips.tips[Random.Range(0, Constants.Tips.tips.Count)];
-            bar.transform.localPosition = Vector2.up * tipPosY;
+            //bar.transform.localPosition = Vector2.up * tipPosY;
         }
         else
         {
             tipLabel.gameObject.SetActive(false);
-            bar.transform.localPosition = Vector2.up * tiplessPosY;
+            //bar.transform.localPosition = Vector2.up * tiplessPosY;
         }
     }
     #endregion Private Helpers

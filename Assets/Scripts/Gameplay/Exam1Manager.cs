@@ -20,9 +20,11 @@ public class Exam1Manager : MonoBehaviour
     [SerializeField] Image skin;
     [SerializeField] Image visible;
     [SerializeField] Image infected;
+    [SerializeField] Slider slider1;
+    [SerializeField] Slider slider2;
 
     [SerializeField] List<GameObject> infections;
-
+    [SerializeField] Vector2 initialPosition;
     public static Exam1Manager Instance;
     
     #region Initialization
@@ -42,7 +44,19 @@ public class Exam1Manager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        initialPosition = xray.localPosition;
+    }
+
     #endregion
+    public void ResetExam()
+    {
+        slider1.value = 0.5f;
+        slider2.value = 0.5f;
+        xray.localPosition = initialPosition;
+        masks.SetActive(false);
+    }
 
     public void PatientExamChanged(PatientSO patient)
     {
@@ -93,10 +107,19 @@ public class Exam1Manager : MonoBehaviour
 
 public void PatientArrived(PatientSO patient)
     {
-        patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
-        patient.onChanged.AddListener((patient) => {
-            PatientExamChanged(patient);
-        });
+        if (!patientExamLines.ContainsKey(patient))
+        {
+            patientExamLines.Add(patient, Instantiate(patientExamLinePrefab, arrivedContent));
+            patient.onChanged.AddListener((patient) =>
+            {
+                PatientExamChanged(patient);
+            });
+        }
+        else
+        {
+            patientExamLines[patient].TurnOnFolder();
+            patientExamLines[patient].TurnOnToggle();
+        }
 
         patientName.text = patient.patientName;
         skin.gameObject.SetActive(true);
@@ -122,8 +145,10 @@ public void PatientArrived(PatientSO patient)
     {
         if (patientExamLines.ContainsKey(patient))
         {
-            Destroy(patientExamLines[patient]);
-            patientExamLines.Remove(patient);
+            patientExamLines[patient].TurnOffFolder();
+            patientExamLines[patient].TurnOffToggle();
+            //Destroy(patientExamLines[patient]);
+            //patientExamLines.Remove(patient);
         }
 
         TurnOffEverything();

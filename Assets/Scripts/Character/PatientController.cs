@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace TarodevController
@@ -23,8 +24,8 @@ namespace TarodevController
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
         private bool goingRight = true;
-        [SerializeField] GameObject img;
-        [SerializeField] private PatientSO patientData;
+        [SerializeField] SpriteRenderer img;
+        [SerializeField] public PatientSO patientData;
         #region Interface
 
         public Vector2 FrameInput => _frameInput.Move;
@@ -99,16 +100,88 @@ namespace TarodevController
 
         public void SetPatientData(PatientSO _patientData)
         {
-            _patientData.controller = this;
-            patientData = _patientData;
+            patientData = new PatientSO();
+            patientData.pathogen = _patientData.pathogen;
+            patientData.symptoms = _patientData.symptoms;
+            patientData.blood = _patientData.blood;
+            patientData.isMale = _patientData.isMale;
+
+            if (_patientData.stage > 0)
+            {
+                patientData.stage = _patientData.stage;
+            }
+            else
+            {
+                patientData.stage = Random.Range(0.0f, 1.0f);
+            }
+
+            if (_patientData.weight > 0)
+            {
+                patientData.weight = _patientData.weight;
+            }
+            else
+            {
+                patientData.weight = Random.Range(80, 120);
+            }
+
+            if (_patientData.age > 0)
+            {
+                patientData.age = _patientData.age;
+            }
+            else
+            {
+                if (patientData.isOld)
+                {
+                    patientData.age = Random.Range(60, 75);
+                }
+                else
+                {
+                    patientData.age = Random.Range(22, 32);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_patientData.profession))
+            {
+                patientData.profession = _patientData.profession;
+            }
+            else
+            {
+                patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
+            }
+
+            if (!string.IsNullOrEmpty(_patientData.patientName))
+            {
+                patientData.patientName = _patientData.patientName;
+            }
+            else
+            {
+                if (patientData.isMale)
+                {
+                    patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
+                }
+                else
+                {
+                    patientData.patientName = Constants.Patients.femaleNames[Random.Range(0, Constants.Patients.femaleNames.Count - 1)];
+                }
+            }
+
+            PatientImages pi = PatientManager.Instance.GetPatientImages(patientData.isMale, patientData.isOld);
+            patientData.skin = pi.skin;
+            patientData.torso = pi.torso;
+            patientData.visible = pi.visible;
+            patientData.blury = pi.blury;
+            patientData.infected = pi.infected;
+            patientData.side = pi.side;
+            img.sprite = patientData.side;
+            patientData.controller = this;
         }
 
         public void SetRandomPatientData()
         {
             patientData = ScriptableObject.CreateInstance<PatientSO>();
-            bool male = Random.Range(0, 2) < 1;
-            bool old = Random.Range(0, 2) < 1;
-            if (male)
+            patientData.isMale = Random.Range(0, 2) < 1;
+            patientData.isOld = Random.Range(0, 2) < 1;
+            if (patientData.isMale)
             {
                 patientData.patientName = Constants.Patients.maleNames[Random.Range(0, Constants.Patients.maleNames.Count - 1)];
             }
@@ -116,7 +189,7 @@ namespace TarodevController
             {
                 patientData.patientName = Constants.Patients.femaleNames[Random.Range(0, Constants.Patients.femaleNames.Count - 1)];
             }
-            if (old)
+            if (patientData.isOld)
             {
                 patientData.age = Random.Range(60, 75);
             }
@@ -124,12 +197,14 @@ namespace TarodevController
             {
                 patientData.age = Random.Range(22, 32);
             }
-            PatientImages pi = PatientManager.Instance.GetPatientImages(male, old);
+            PatientImages pi = PatientManager.Instance.GetPatientImages(patientData.isMale, patientData.isOld);
             patientData.skin = pi.skin;
             patientData.torso = pi.torso;
             patientData.visible = pi.visible;
             patientData.blury = pi.blury;
             patientData.infected = pi.infected;
+            patientData.side = pi.side;
+            img.sprite = patientData.side;
             patientData.pathogen = (Pathogen)Random.Range(0, System.Enum.GetValues(typeof(Pathogen)).Length);
             patientData.weight = Random.Range(80, 120);
             patientData.profession = Constants.Patients.Professions[Random.Range(0, Constants.Patients.Professions.Count - 1)];
