@@ -8,7 +8,7 @@ public class PatientManager : MonoBehaviour
 {
     [SerializeField] public List<PatientImages> malePatientImages;
     [SerializeField] public List<PatientImages> femalePatientImages;
-    [SerializeField] public List<PatientInfections> patientInfections;
+    //[SerializeField] public List<PatientInfections> patientInfections;
     [SerializeField] SerializableDictionaryBase<Pathogen, string> symptoms = new SerializableDictionaryBase<Pathogen, string>() {
         // Normal patients
         { Pathogen.Normal, "Normal" },
@@ -76,6 +76,7 @@ public class PatientManager : MonoBehaviour
 [Serializable]
 public class PatientImages
 {
+    [SerializeField] public Sprite side;
     [SerializeField] public Sprite skin;
     [SerializeField] public Sprite torso;
     [SerializeField] public Sprite visible;
@@ -83,11 +84,11 @@ public class PatientImages
     [SerializeField] public Sprite blury;
 }
 
-[Serializable]
-public class PatientInfections
-{
-    [SerializeField] public Pathogen pathogen;
-    [SerializeField] public string symptoms;
-    [SerializeField] public int skeletonInfection;
-    [SerializeField] public int organInfection;
-}
+//[Serializable]
+//public class PatientInfections
+//{
+//    [SerializeField] public Pathogen pathogen;
+//    [SerializeField] public string symptoms;
+//    [SerializeField] public int skeletonInfection;
+//    [SerializeField] public int organInfection;
+//}

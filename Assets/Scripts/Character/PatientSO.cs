@@ -18,12 +18,15 @@ public class PatientSO : ScriptableObject
     public string symptoms;
     public Pathogen pathogen;
     public float stage;
+    public Sprite side;
     public Sprite skin;
     public Sprite blury;
     public Sprite visible;
     public Sprite infected;
     public Sprite torso;
     public bool inIso = false;
+    public bool isMale = false;
+    public bool isOld = false;
     public PatientController controller;
     public int currentState = 0;
 

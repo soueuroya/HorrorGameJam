@@ -51,10 +51,9 @@ public sealed class Constants
     {
         public static List<string> tips = new List<string>()
         {
-            "Patients can be asymptomatic",
-            "Strange behaviours can indicate neurological deceases.",
-            "Tip n 3",
-            "Tip n 4"
+            "Patients can be asymptomatic.",
+            "You can skip the first chapter by sending the patient straight home.",
+            "Patients can only be infected by one pathogen at a time."
         };
     }
 

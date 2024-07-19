@@ -7,6 +7,7 @@ public class LoadingManager : MonoBehaviour
     // Prevent non-singleton constructor use.
     protected LoadingManager() { }
     public static LoadingManager Instance;
+    AsyncOperation asyncOperation;
 
     #region Initialization
     // Singleton awake
@@ -26,7 +27,7 @@ public class LoadingManager : MonoBehaviour
             }
         }
 
-        EventManager.ContentLoaded += OnContentLoaded;
+        //EventManager.ContentLoaded += OnContentLoaded;
         EventManager.MainMenuSceneLoad += OnMainMenuSceneLoad;
         EventManager.EventManagerLoaded += InitializeLoading;
     }
@@ -51,7 +52,7 @@ public class LoadingManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.ContentLoaded -= OnContentLoaded;
+        //EventManager.ContentLoaded -= OnContentLoaded;
         EventManager.MainMenuSceneLoad -= OnMainMenuSceneLoad;
         EventManager.EventManagerLoaded -= InitializeLoading;
     }
@@ -82,9 +83,13 @@ public class LoadingManager : MonoBehaviour
     private IEnumerator LoadSceneAsync(string _scene)
     {
         // Start loading the scene asynchronously
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(_scene);
+        if (asyncOperation != null)
+        {
+            asyncOperation.allowSceneActivation = false;
+        }
+        asyncOperation = SceneManager.LoadSceneAsync(_scene);
         asyncOperation.allowSceneActivation = false;
-        
+
         // While the scene is loading, update the loading bar
         while (!asyncOperation.isDone)
         {
@@ -97,9 +102,10 @@ public class LoadingManager : MonoBehaviour
             if (asyncOperation.progress >= 0.9f)
             {
                 // Activate the scene
-                asyncOperation.allowSceneActivation = true;
+                //asyncOperation.allowSceneActivation = true;
+                LoadingBarManager.Instance.UpdateBarSize(1);
+                Invoke("DelayedActivation", 2f);
             }
-
             yield return null;
         }
         LoadingBarManager.Instance.UpdateBarSize(1);
@@ -109,31 +115,41 @@ public class LoadingManager : MonoBehaviour
 
     #region Private Helpers
 
-    private void OnSceneUnloaded()
-    {
-        //// Hide loading screen
-        // Release assets
-        if (LoadingScreen.Instance._IsSlow)
-        {
-            Invoke("DelayedOnSceneUnloaded", 2);
-        }
-        else
-        {
-            LoadingScreen.Instance.Hide();
-        }
-    }
+    //private void OnSceneUnloaded()
+    //{
+    //    //// Hide loading screen
+    //    // Release assets
+    //    if (LoadingScreen.Instance._IsSlow)
+    //    {
+    //        Invoke("DelayedOnSceneUnloaded", 2);
+    //    }
+    //    else
+    //    {
+    //        LoadingScreen.Instance.Hide();
+    //    }
+    //}
+    //
+    //private void DelayedOnSceneUnloaded()
+    //{
+    //    LoadingScreen.Instance.Hide();
+    //}
+    //
+    //private void OnContentLoaded()
+    //{
+    //    //// Hide loading screen
+    //    //LoadingScreen.Instance.Hide();
+    //    Debug.Log("On content loaded - Unloading prev scene");
+    //    //Invoke("DelayedUnload", 3f);
+    //}
+    //
+    //private void DelayedUnload()
+    //{
+    //    EventManager.OnSceneUnload();
+    //}
 
-    private void DelayedOnSceneUnloaded()
+    private void DelayedActivation()
     {
-        LoadingScreen.Instance.Hide();
-    }
-
-    private void OnContentLoaded()
-    {
-        //// Hide loading screen
-        //LoadingScreen.Instance.Hide();
-        Debug.Log("On content loaded - Unloading prev scene");
-        EventManager.OnSceneUnload();
+        asyncOperation.allowSceneActivation = true;
     }
 
     private void OnMainMenuSceneLoad()

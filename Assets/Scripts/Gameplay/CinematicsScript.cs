@@ -126,6 +126,7 @@ public class CinematicsScript : MonoBehaviour
 
         if (!segment.requireInput)
         {
+            inputRequirement.SetActive(false);
             Invoke("NextSegment", segment.nextDelay);
         }
         else

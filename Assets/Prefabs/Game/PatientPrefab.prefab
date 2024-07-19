@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 81285c2c647dfe54085764e3fc23d0af, type: 2}
-  img: {fileID: 8133052660237603600}
+  img: {fileID: 4779156925446744110}
   patientData: {fileID: 0}
 --- !u!1 &8133052660237603600
 GameObject:

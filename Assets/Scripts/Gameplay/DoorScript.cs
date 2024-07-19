@@ -20,7 +20,7 @@ public class DoorScript : MonoBehaviour
         if (isOpen)
         {
             isOpen = false;
-            transform.localScale = transform.localScale.y * Vector2.up;
+            transform.localScale = transform.localScale.y * Vector2.up + Vector2.right * 0.03f;
         }
     }
 
