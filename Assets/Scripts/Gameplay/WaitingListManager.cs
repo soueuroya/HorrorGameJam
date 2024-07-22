@@ -95,6 +95,17 @@ public class WaitingListManager : MonoBehaviour
             //patientSimpleLines.Remove(patient);
         }
 
+        if (patient.pathogen == Pathogen.Cerebrognatha || patient.pathogen == Pathogen.CerebrognathaAS ||
+            patient.pathogen == Pathogen.Pulmospora || patient.pathogen == Pathogen.PulmosporaAS ||
+            patient.pathogen == Pathogen.Xenostroma || patient.pathogen == Pathogen.XenostromaAS)
+        {
+            GameEventManager.OnInfectedHome();
+        }
+        else
+        {
+            GameEventManager.OnNormalHome();
+        }
+
         patient.onChanged.RemoveAllListeners();
     }
 

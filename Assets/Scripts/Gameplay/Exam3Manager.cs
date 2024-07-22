@@ -11,6 +11,8 @@ public class Exam3Manager : MonoBehaviour
     SerializableDictionaryBase<PatientSO, PatientExamLine> patientExamLines = new SerializableDictionaryBase<PatientSO, PatientExamLine>() { };
 
     [SerializeField] RectTransform helmet;
+    //[SerializeField] Transform gameHelmet;
+    [SerializeField] Vector2 gameHelmetInitial;
     [SerializeField] GameObject monitor;
     [SerializeField] RectTransform target;
     [SerializeField] Pathogen pathogen;
@@ -52,12 +54,14 @@ public class Exam3Manager : MonoBehaviour
     {
         distance = (target.position - helmet.position).y / 50;
         initialPosition = helmet.localPosition;
+        //gameHelmetInitial = gameHelmet.localPosition;
     }
 
     public void ResetExam()
     {
         helmet.localPosition = initialPosition;
         monitor.SetActive(false);
+        //gameHelmet.localPosition = gameHelmetInitial;
     }
 
 
@@ -71,9 +75,11 @@ public class Exam3Manager : MonoBehaviour
     {
         monitor.SetActive(false);
         helmet.Translate(Vector2.up * distance);
+        //gameHelmet.Translate(Vector2.up * distance);
 
         if (helmet.position.y <= target.position.y)
         {
+
             helmet.position = Vector2.right * helmet.position.x + Vector2.up * target.position.y;
             EndReached();
         }

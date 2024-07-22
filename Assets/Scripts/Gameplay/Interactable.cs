@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] UnityEvent onInteract;
     [SerializeField] UnityEvent onUnteract;
     [SerializeField] bool shouldStopPlayer;
-
+    [SerializeField] bool shouldUnteract = true;
 
     bool interacted = false;
 
@@ -28,7 +28,7 @@ public class Interactable : MonoBehaviour
 
     public void Interacted(bool lockMovement)
     {
-        if (interacted)
+        if (interacted && shouldUnteract)
         {
             Unteracted(lockMovement);
             return;

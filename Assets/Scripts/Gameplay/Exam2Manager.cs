@@ -12,6 +12,8 @@ public class Exam2Manager : MonoBehaviour
 
     [SerializeField] RectTransform bluryMask;
     [SerializeField] RectTransform skinMask;
+    [SerializeField] Transform gameLine;
+    //[SerializeField] Vector2 gameLineInitial;
     [SerializeField] float limit;
     [SerializeField] Pathogen pathogen;
     [SerializeField] Pathogen pathogen2;
@@ -52,10 +54,12 @@ public class Exam2Manager : MonoBehaviour
     private void Start()
     {
         initialPosition = lineSlider.value;
+        //gameLineInitial = gameLine.transform.localPosition;
     }
     public void ResetExam()
     {
         lineSlider.value = initialPosition;
+        //gameLine.transform.localPosition = gameLineInitial;
     }
 
     public void PatientExamChanged(PatientSO patient)
@@ -140,6 +144,7 @@ public class Exam2Manager : MonoBehaviour
         }
 
         skinMask.localScale = Vector2.right + Vector2.up * value;
+        //gameLine.localPosition = gameLineInitial + Vector2.up * value;
 
         if (blur)
         {

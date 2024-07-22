@@ -7,15 +7,18 @@ public class PatientSpawner : MonoBehaviour
 {
     [SerializeField] PatientController patientPrefab;
     [SerializeField] Transform container;
-    [SerializeField] int waitBeforeStart;
     [SerializeField] int waitBetween;
+    [SerializeField] bool repeating = false;
 
-    public int missedPatients = 0;
-    public int missedInfected = 0;
-
-    private void Update()
+    public void StartSpawning()
     {
-        
+        repeating = true;
+        SpawnNewPatient();
+    }
+
+    public void StopSpawning()
+    {
+        repeating = false;
     }
 
 
@@ -30,14 +33,22 @@ public class PatientSpawner : MonoBehaviour
         }
         else
         {
-            missedPatients++;
             if (pc.patientData.pathogen == Pathogen.Cerebrognatha || pc.patientData.pathogen == Pathogen.CerebrognathaAS ||
                 pc.patientData.pathogen == Pathogen.Pulmospora || pc.patientData.pathogen == Pathogen.PulmosporaAS ||
                 pc.patientData.pathogen == Pathogen.Xenostroma || pc.patientData.pathogen == Pathogen.XenostromaAS)
             {
-                missedInfected++;
+                GameEventManager.OnInfectedIgnored();
+            }
+            else
+            {
+                GameEventManager.OnNormalIgnored();
             }
             Destroy(pc.gameObject);
+        }
+
+        if (repeating)
+        {
+            Invoke("SpawnNewPatient", waitBetween);
         }
     }
 
@@ -52,12 +63,15 @@ public class PatientSpawner : MonoBehaviour
         }
         else
         {
-            missedPatients++;
             if (pc.patientData.pathogen == Pathogen.Cerebrognatha || pc.patientData.pathogen == Pathogen.CerebrognathaAS ||
                 pc.patientData.pathogen == Pathogen.Pulmospora || pc.patientData.pathogen == Pathogen.PulmosporaAS ||
                 pc.patientData.pathogen == Pathogen.Xenostroma || pc.patientData.pathogen == Pathogen.XenostromaAS)
             {
-                missedInfected++;
+                GameEventManager.OnInfectedIgnored();
+            }
+            else
+            {
+                GameEventManager.OnNormalIgnored();
             }
             Destroy(pc.gameObject);
         }

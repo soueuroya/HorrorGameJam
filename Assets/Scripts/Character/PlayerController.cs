@@ -24,6 +24,7 @@ namespace TarodevController
         private bool lockMovement;
         private bool goingRight = true;
         [SerializeField] GameObject img;
+        [SerializeField] Animator anim;
 
         #region Interface
 
@@ -62,6 +63,9 @@ namespace TarodevController
         private void Update()
         {
             _time += Time.deltaTime;
+
+            if (lockMovement)
+            { return; }
             GatherInput();
         }
 
@@ -141,7 +145,8 @@ namespace TarodevController
 
         private void FixedUpdate()
         {
-            if(lockMovement)
+            anim.SetFloat("SpeedX", MathF.Abs(_rb.velocity.x));
+            if (lockMovement)
             { return; }
 
             //HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
@@ -268,7 +273,10 @@ namespace TarodevController
 
         #endregion
 
-        private void ApplyMovement() => _rb.velocity = _frameVelocity;
+        private void ApplyMovement()
+        {
+            _rb.velocity = _frameVelocity;
+        }
 
 #if UNITY_EDITOR
         private void OnValidate()

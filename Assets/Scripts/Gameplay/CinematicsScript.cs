@@ -17,6 +17,7 @@ public class CinematicsSegment
     [SerializeField] public float nextDelay = 0.0f;
     [SerializeField] public AudioClip audio;
     [SerializeField] public bool hasMusic;
+    [SerializeField] public bool lockCinematics;
 }
 
 public class CinematicsScript : MonoBehaviour
@@ -30,6 +31,7 @@ public class CinematicsScript : MonoBehaviour
     [SerializeField] bool requiringInput = false;
     [SerializeField] GameObject inputRequirement;
     [SerializeField] GameObject tires;
+    [SerializeField] public bool cinematicsLocked;
 
     private void Awake()
     {
@@ -44,18 +46,27 @@ public class CinematicsScript : MonoBehaviour
 
     private void Update()
     {
-        if (requiringInput)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (requiringInput)
             {
                 requiringInput = false;
                 NextSegment();
+            }
+            else if (!cinematicsLocked)
+            {
+                if (segments.Count > currentSegment)
+                {
+                    CancelInvoke("RequireInput");
+                    RequireInput();
+                }
             }
         }
     }
 
     public void NextSegment()
     {
+        CancelInvoke("NextSegment");
         inputRequirement.SetActive(false);
         if (segments.Count <= currentSegment)
         {
@@ -121,23 +132,33 @@ public class CinematicsScript : MonoBehaviour
 
         if (segment.audio != null)
         {
+            audioS.Stop();
+            audioS.clip = null;
             audioS.PlayOneShot(segment.audio);
         }
 
         if (!segment.requireInput)
         {
-            inputRequirement.SetActive(false);
-            Invoke("NextSegment", segment.nextDelay);
+            if (segment.nextDelay != 0)
+            {
+                Invoke("NextSegment", segment.nextDelay);
+            }
         }
         else
         {
             Invoke("RequireInput", segment.requireDelay);
         }
 
+        cinematicsLocked = segment.lockCinematics;
+
         if (segment.hasMusic && !MusicManager.Instance.isPlaying)
         {
             MusicManager.Instance.Resume();
             MusicManager.Instance.FadeMusicTo(3, 1);
+        }
+        else if (!segment.hasMusic && MusicManager.Instance.isPlaying)
+        {
+            MusicManager.Instance.FadeMusicTo(1, 0);
         }
         //else if (MusicManager.Instance.isPlaying)
         //{

@@ -4,6 +4,7 @@ using UnityEngine;
 public class DoorScript : MonoBehaviour
 {
     [SerializeField] bool isOpen = true;
+    [SerializeField] bool shouldclose = true;
     [SerializeField] Vector2 initialSize;
     
 
@@ -11,7 +12,10 @@ public class DoorScript : MonoBehaviour
     void Start()
     {
         initialSize = transform.localScale;
-        Close();
+        if (shouldclose)
+        {
+            Close();
+        }
     }
 
 

@@ -90,7 +90,7 @@ public class MusicManager : MonoBehaviour
     }
     #endregion Initialization
 
-    #region Public Methods
+     #region Public Methods
     public void StartAgain()
     {
         StartMusic(audioSource.clip);

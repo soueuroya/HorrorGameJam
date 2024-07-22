@@ -11,6 +11,8 @@ public class Exam1Manager : MonoBehaviour
     SerializableDictionaryBase<PatientSO, PatientExamLine> patientExamLines = new SerializableDictionaryBase<PatientSO, PatientExamLine>() { };
 
     [SerializeField] RectTransform xray;
+    //[SerializeField] Transform gameXray;
+    [SerializeField] Vector2 gameXrayInitial;
     [SerializeField] Animator anim;
     [SerializeField] GameObject masks;
     [SerializeField] Pathogen pathogen;
@@ -47,6 +49,7 @@ public class Exam1Manager : MonoBehaviour
     private void Start()
     {
         initialPosition = xray.localPosition;
+        //gameXrayInitial = gameXray.localPosition;
     }
 
     #endregion
@@ -56,6 +59,7 @@ public class Exam1Manager : MonoBehaviour
         slider2.value = 0.5f;
         xray.localPosition = initialPosition;
         masks.SetActive(false);
+        //gameXray.localPosition = gameXrayInitial;
     }
 
     public void PatientExamChanged(PatientSO patient)
@@ -160,12 +164,14 @@ public void PatientArrived(PatientSO patient)
     {
         masks.SetActive(false);
         xray.localPosition = xray.localPosition.y * Vector2.up + (((value - 0.5f) * 110 ) * Vector2.right);
+        //gameXray.localPosition = (((value - 0.5f) * 110) + initialPosition.x) * Vector2.right + gameXray.localPosition.y * Vector2.up;
     }
 
     public void OnSliderYChanged(float value)
     {
         masks.SetActive(false);
         xray.localPosition = xray.localPosition.x * Vector2.right + (((value - 0.5f) * -450 ) * Vector2.up);
+        //gameXray.localPosition = (((value - 0.5f) * -450) + initialPosition.y) * Vector2.up + gameXray.localPosition.x * Vector2.right;
     }
 
     public void ButtonPressed()

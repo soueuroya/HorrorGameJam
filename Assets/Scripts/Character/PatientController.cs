@@ -24,7 +24,9 @@ namespace TarodevController
         private bool _cachedQueryStartInColliders;
         private RigidbodyConstraints2D constraints;
         private bool goingRight = true;
+        private bool isPaused = false;
         [SerializeField] SpriteRenderer img;
+        [SerializeField] Animator anim;
         [SerializeField] public PatientSO patientData;
         #region Interface
 
@@ -174,6 +176,8 @@ namespace TarodevController
             patientData.side = pi.side;
             img.sprite = patientData.side;
             patientData.controller = this;
+
+            SetupAnimations();
         }
 
         public void SetRandomPatientData()
@@ -212,6 +216,8 @@ namespace TarodevController
             patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
             patientData.stage = Random.Range(0.0f, 1.0f);
             patientData.controller = this;
+
+            SetupAnimations();
         }
 
         public bool TrytogoTo(PatientSlot newTarget)
@@ -352,6 +358,39 @@ namespace TarodevController
             //}
         }
 
+        private void RepeatTwitching()
+        {
+            anim.SetTrigger("Twitch");
+            Invoke("RepeatTwitching", 5);
+        }
+
+        private void StopTwitching()
+        {
+            CancelInvoke("RepeatTwitching");
+        }
+
+        private void RepeatCoughing()
+        {
+            anim.SetTrigger("Cough");
+            Invoke("RepeatCoughing", 5);
+        }
+
+        private void StopCoughing()
+        {
+            CancelInvoke("RepeatCoughing");
+        }
+
+        private void RepeatHeadache()
+        {
+            anim.SetTrigger("Headache");
+            Invoke("RepeatHeadache", 5);
+        }
+
+        private void StopHeadache()
+        {
+            CancelInvoke("RepeatHeadache");
+        }
+
         private void FixedUpdate()
         {
             //HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
@@ -359,6 +398,46 @@ namespace TarodevController
             HandleDirection();
             HandleGravity();
             ApplyMovement();
+        }
+
+        private void SetupAnimations()
+        {
+            switch (patientData.pathogen)
+            {
+                // Normal patient
+                case Pathogen.Normal:
+                    break;
+
+                // Infected Bones
+                case Pathogen.Xenostroma: RepeatTwitching();
+                    break;
+
+                // Infected Brain
+                case Pathogen.Cerebrognatha: RepeatHeadache();
+                    break;
+
+                // Infected Lungs
+                case Pathogen.Pulmospora: RepeatCoughing();
+                    break;
+
+                // False positives
+                case Pathogen.XenostromaFP: RepeatTwitching();
+                    break;
+                case Pathogen.CerebrognathaFP: RepeatHeadache();
+                    break;
+                case Pathogen.PulmosporaFP: RepeatCoughing();
+                    break;
+
+                // Asymptomatics
+                case Pathogen.XenostromaAS:
+                    break;
+                case Pathogen.CerebrognathaAS:
+                    break;
+                case Pathogen.PulmosporaAS:
+                    break;
+                default:
+                    break;
+            }
         }
 
         #region Collisions

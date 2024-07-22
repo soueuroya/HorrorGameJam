@@ -4,6 +4,12 @@ using UnityEngine;
 public class GameManager : BaseMenu
 {
     private bool sceneLoadListenerAdded = false;
+    private int infectedHome = 0;
+    private int infectedIsolated = 0;
+    private int infectedNotWelcomed = 0;
+    private int normalNotWelcomed = 0;
+    private int normalIsolated = 0;
+    private int normalHome = 0;
 
     private void OnEnable()
     {
@@ -20,6 +26,13 @@ public class GameManager : BaseMenu
             EventManager.EventManagerLoaded += UpdateContent;
             sceneLoadListenerAdded = false;
         }
+
+        GameEventManager.NormalHome += IncreaseNormalHome;
+        GameEventManager.NormalIsolation += IncreaseNormalIsolated;
+        GameEventManager.NormalIgnored += IncreaseNormalNotAnswered;
+        GameEventManager.InfectedHome += IncreaseInfectedHome;
+        GameEventManager.InfectedIsolation += IncreaseInfectedIsolated;
+        GameEventManager.InfectedIgnored += IncreaseInfectedNotAnswered;
     }
 
     private void OnDisable()
@@ -33,6 +46,13 @@ public class GameManager : BaseMenu
         {
             EventManager.EventManagerLoaded -= UpdateContent;
         }
+
+        GameEventManager.NormalHome -= IncreaseNormalHome;
+        GameEventManager.NormalIsolation -= IncreaseNormalIsolated;
+        GameEventManager.NormalIgnored -= IncreaseNormalNotAnswered;
+        GameEventManager.InfectedHome -= IncreaseInfectedHome;
+        GameEventManager.InfectedIsolation -= IncreaseInfectedIsolated;
+        GameEventManager.InfectedIgnored -= IncreaseInfectedNotAnswered;
     }
 
     private void ShowMenu()
@@ -81,4 +101,34 @@ public class GameManager : BaseMenu
         AudioManager.Instance.PlayCancel();
         LoadingManager.Instance.LoadScene("MainMenu", new LoadingParameters() { });
     }
+
+    public void IncreaseNormalNotAnswered()
+    {
+        normalNotWelcomed++;
+    }
+
+    public void IncreaseNormalHome()
+    {
+        normalHome++;
+    }
+
+    public void IncreaseNormalIsolated()
+    {
+        normalIsolated++;
+    }
+
+    public void IncreaseInfectedNotAnswered()
+    {
+        infectedNotWelcomed++;
+    }
+
+    public void IncreaseInfectedHome()
+    {
+        infectedHome++;
+    }
+
+    public void IncreaseInfectedIsolated()
+    {
+        infectedNotWelcomed++;
+    }    
 }

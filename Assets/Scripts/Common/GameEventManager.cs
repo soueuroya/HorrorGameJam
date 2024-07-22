@@ -12,6 +12,12 @@ public class GameEventManager : EventManager
     public static event EventFired<bool> ChampionDefeated;
     public static event EventFired GameStart;
     public static event EventFired GameEnd;
+    public static event EventFired NormalHome;
+    public static event EventFired InfectedHome;
+    public static event EventFired NormalIgnored;
+    public static event EventFired InfectedIgnored;
+    public static event EventFired NormalIsolation;
+    public static event EventFired InfectedIsolation;
     public static event EventFired ConfirmationPressed;
     
 
@@ -47,6 +53,12 @@ public class GameEventManager : EventManager
     public static void OnVictory(bool isLocalPlayer)        { FireEvent(ChampionDefeated, isLocalPlayer); }
     public static void OnGameStart()                        { FireEvent(GameStart); }
     public static void OnGameEnd()                          { FireEvent(GameEnd); }
+    public static void OnNormalHome()                       { FireEvent(NormalHome); }
+    public static void OnInfectedHome()                     { FireEvent(InfectedHome); }
+    public static void OnNormalIsolation()                  { FireEvent(NormalIsolation); }
+    public static void OnInfectedIsolation()                { FireEvent(InfectedIsolation); }
+    public static void OnNormalIgnored()                    { FireEvent(NormalIgnored); }
+    public static void OnInfectedIgnored()                  { FireEvent(InfectedIgnored); }
     public static void OnConfirmationPressed()              { FireEvent(ConfirmationPressed); }
 
     #endregion Public Methods
