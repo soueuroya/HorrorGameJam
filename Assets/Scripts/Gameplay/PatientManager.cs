@@ -82,6 +82,7 @@ public class PatientImages
     [SerializeField] public Sprite visible;
     [SerializeField] public Sprite infected;
     [SerializeField] public Sprite blury;
+    [SerializeField] public RuntimeAnimatorController animator;
 }
 
 //[Serializable]

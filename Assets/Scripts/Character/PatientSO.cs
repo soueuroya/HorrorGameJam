@@ -29,6 +29,7 @@ public class PatientSO : ScriptableObject
     public bool isOld = false;
     public PatientController controller;
     public int currentState = 0;
+    public Animator animator;
 
     public UnityEvent<PatientSO> onChanged = new UnityEvent<PatientSO>();
 

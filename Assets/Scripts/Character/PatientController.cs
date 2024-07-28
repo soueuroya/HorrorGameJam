@@ -176,7 +176,7 @@ namespace TarodevController
             patientData.side = pi.side;
             img.sprite = patientData.side;
             patientData.controller = this;
-
+            anim.runtimeAnimatorController = pi.animator;
             SetupAnimations();
         }
 
@@ -216,7 +216,7 @@ namespace TarodevController
             patientData.blood = (Blood)Random.Range(0, System.Enum.GetValues(typeof(Blood)).Length);
             patientData.stage = Random.Range(0.0f, 1.0f);
             patientData.controller = this;
-
+            anim.runtimeAnimatorController = pi.animator;
             SetupAnimations();
         }
 
