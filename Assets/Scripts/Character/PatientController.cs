@@ -393,6 +393,7 @@ namespace TarodevController
 
         private void FixedUpdate()
         {
+            anim.SetFloat("xSpeed", MathF.Abs(_rb.velocity.x));
             //HandleJump(); // Handle jump must be executed first, otherwise player starts jumping
             CheckCollisions(); // Update collisions and flags
             HandleDirection();

@@ -16629,7 +16629,7 @@ MonoBehaviour:
     visible: {fileID: 21300000, guid: ae5c261b742e1c044b84227a79137acc, type: 3}
     infected: {fileID: 21300000, guid: ae5c261b742e1c044b84227a79137acc, type: 3}
     blury: {fileID: 21300000, guid: f048f8bc183d8cf4ba3278cb49d07834, type: 3}
-    animator: {fileID: 9100000, guid: 9eef5d258cae6fb469669e5d683e9bf1, type: 2}
+    animator: {fileID: 9100000, guid: 398c65f43ff1aba40b31f1165ef396bf, type: 2}
   - side: {fileID: -369733847, guid: 931656b699317a34fa762e58f79736d1, type: 3}
     skin: {fileID: 21300000, guid: 5f870f84a9fbca642ac766f178148b57, type: 3}
     torso: {fileID: 21300000, guid: 92afe1cf6db49784e871e4be487b6b84, type: 3}

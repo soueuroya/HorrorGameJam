@@ -439,6 +439,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3477343860456176894, guid: 4c2dd4c835a1b0940a1d6de5bb1a5612, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0025668a9d2d2ad47b73afaf3c2f1a56, type: 3}
     - target: {fileID: 7122652732059876176, guid: 4c2dd4c835a1b0940a1d6de5bb1a5612, type: 3}
       propertyPath: m_LocalPosition.x
       value: 935.25903
@@ -589,9 +593,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 136414308111084364, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 140132993558057128, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -591.9999
+      objectReference: {fileID: 0}
     - target: {fileID: 1695893052924022051, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
       propertyPath: m_Name
       value: CreditsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740152235571817719, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -592
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672335378540640090, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266831255692902097, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640516395999515511, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.000061
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.66666657
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.66666657
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.66666657
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.8238993
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.8238993
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014538377914224846, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.8238993
+      objectReference: {fileID: 0}
+    - target: {fileID: 6212251712401670844, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -591.9999
       objectReference: {fileID: 0}
     - target: {fileID: 6905884508780608986, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
       propertyPath: m_Pivot.x
@@ -672,6 +728,18 @@ PrefabInstance:
     - target: {fileID: 6905884508780608986, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985598251020820391, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356610279812752567, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8179699244332643820, guid: bf7ec513ecd0df94fa2d0c8a0400023d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -591.9999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
