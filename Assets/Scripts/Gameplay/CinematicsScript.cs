@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class CinematicsSegment
@@ -18,6 +19,7 @@ public class CinematicsSegment
     [SerializeField] public AudioClip audio;
     [SerializeField] public bool hasMusic;
     [SerializeField] public bool lockCinematics;
+    [SerializeField] public UnityEvent onStart; 
 }
 
 public class CinematicsScript : MonoBehaviour
@@ -166,6 +168,8 @@ public class CinematicsScript : MonoBehaviour
         //        MusicManager.Instance.StopMusic();
         //    });
         //}
+
+        segment.onStart?.Invoke();
     }
 
     public void RequireInput()
